@@ -1,14 +1,3 @@
-[{
-  "app": {
-    "components": {
-      "Table": {
-        "header": "Cabecera de la tabla"
-      }
-    },
-    "containers": {
-      "HomePage": {
-        "header": "cabeza de papa"
-      }
-    }
-  }
-}]
+{
+  "app.containers.HomePage.header": "You greatest dictionary"
+}
