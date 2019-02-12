@@ -9,13 +9,14 @@
 
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import GlobalStyle from '../../global-styles';
 
-export default function App() {
+function App() {
   return (
     <div>
       <Switch>
@@ -26,3 +27,5 @@ export default function App() {
     </div>
   );
 }
+
+export default App;
