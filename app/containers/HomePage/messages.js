@@ -1,7 +1,8 @@
-/*
- * HomePage Messages
+/**
+ *  Created by
+ *  @author Rudolf Cicko
+ *  @date 2/12/19
  *
- * This contains all the text for the HomePage container.
  */
 import { defineMessages } from 'react-intl';
 

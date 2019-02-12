@@ -4,9 +4,22 @@
 
 import { createStore, applyMiddleware, compose } from 'redux';
 import { fromJS } from 'immutable';
-import { routerMiddleware } from 'connected-react-router/immutable';
+import { combineReducers } from 'redux-immutable';
+import { connectRouter, routerMiddleware} from 'connected-react-router/immutable';
 import createSagaMiddleware from 'redux-saga';
-import createReducer from './reducers';
+import reducers from './reducers';
+import historyUtil from './utils/history';
+
+function createReducer(injectedReducers = {}) {
+  const rootReducer = combineReducers({
+    ...reducers,
+    ...injectedReducers,
+  });
+
+  // Wrap the root reducer and return a new root reducer with router state
+  const mergeWithRouterState = connectRouter(historyUtil);
+  return mergeWithRouterState(rootReducer);
+}
 
 const sagaMiddleware = createSagaMiddleware();
 

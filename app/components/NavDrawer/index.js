@@ -6,9 +6,12 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { get } from 'lodash';
+import { fromJS } from 'immutable';
+import { compose } from 'recompose';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
@@ -16,6 +19,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import toggleNavDrawer from '../../containers/App/store/actions';
 
 const styles = {
   list: {
@@ -27,18 +31,12 @@ const styles = {
 };
 
 class NavDrawer extends React.Component {
-  state = {
-    left: false,
-  };
-
-  toggleDrawer = open => () => {
-    this.setState({
-      left: open,
-    });
+  toggleDrawer = () => {
+    this.props.dispatch(toggleNavDrawer());
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, open } = this.props;
 
     const sideList = (
       <div className={classes.list}>
@@ -64,17 +62,16 @@ class NavDrawer extends React.Component {
 
     return (
       <div>
-        <Button onClick={this.toggleDrawer(true)}>Open Left</Button>
         <Drawer
-          open={this.state.left}
-          onClose={this.toggleDrawer(false)}
+          open={open}
+          onClose={this.toggleDrawer}
           variant="temporary"
         >
           <div
             tabIndex={0}
             role="button"
-            onClick={this.toggleDrawer(false)}
-            onKeyDown={this.toggleDrawer(false)}
+            onClick={this.toggleDrawer}
+            onKeyDown={this.toggleDrawer}
           >
             {sideList}
           </div>
@@ -84,8 +81,19 @@ class NavDrawer extends React.Component {
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    open: get(state.getIn(['generic']), 'navDrawer.open', false),
+  }
+}
+
 NavDrawer.propTypes = {
   classes: PropTypes.object.isRequired,
+  open: PropTypes.bool,
+  dispatch: PropTypes.func,
 };
 
-export default withStyles(styles)(NavDrawer);
+export default compose(
+  connect(mapStateToProps),
+  withStyles(styles),
+)(NavDrawer);
