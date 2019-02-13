@@ -31,7 +31,7 @@ class App extends React.Component {
     return (
       <div>
         <AppBar />
-        <NavDrawer open={this.props.drawerOpen} />
+        <NavDrawer />
         <Switch>
           {routes.map(({ component, path }) => (
             <Route exact key={path} path={path} component={component} />
@@ -46,10 +46,8 @@ class App extends React.Component {
 
 App.propTypes = {
   location: PropTypes.object,
-  drawerOpen: PropTypes.bool,
 };
 
 export default connect(state => ({
   location: state.getIn(['router', 'location']),
-  drawerOpen: get(state, 'generic.navDrawer.open', false),
 }))(App);

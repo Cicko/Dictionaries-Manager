@@ -16,7 +16,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import toggleNavDrawer from '../../containers/App/store/actions';
+import { toggleNavDrawer } from '../../containers/App/store/actions';
 import navItems from './navItems';
 
 const styles = {
@@ -76,8 +76,8 @@ class NavDrawer extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    open: get(state.getIn(['generic']), 'navDrawer.open', false),
-  }
+    open: state.getIn(['generic', 'navDrawer', 'open']),
+  };
 }
 
 NavDrawer.propTypes = {

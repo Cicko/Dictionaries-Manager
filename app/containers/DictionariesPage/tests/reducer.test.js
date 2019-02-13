@@ -1,5 +1,5 @@
 import { fromJS } from 'immutable';
-import dictionariesPageReducer from '../reducer';
+import dictionariesPageReducer from '../store/reducer';
 
 describe('dictionariesPageReducer', () => {
   it('returns the initial state', () => {

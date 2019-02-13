@@ -5,7 +5,9 @@
  *
  */
 
-import { NAV_DRAWER_TOGGLE } from './constants';
+import {
+  NAV_DRAWER_TOGGLE,
+} from './constants';
 
 /**
  * function that returns an action to toggle the navigation drawer.
@@ -16,4 +18,6 @@ function toggleNavDrawer() {
   };
 }
 
-export default toggleNavDrawer;
+export {
+  toggleNavDrawer,
+};

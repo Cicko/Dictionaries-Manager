@@ -4,7 +4,7 @@
  *
  */
 import React from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -15,7 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import messages from './messages';
-import toggleNavDrawer from '../../containers/App/store/actions';
+import { toggleNavDrawer } from '../../containers/App/store/actions';
 
 const styles = {
   root: {
@@ -58,6 +58,7 @@ function SimpleAppBar(props) {
 SimpleAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
   dispatch: PropTypes.func,
+  title: PropTypes.string,
 };
 
 export default compose(
