@@ -27,7 +27,6 @@ DictionariesPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-
 export default compose(
   connect(() => ({})),
 )(DictionariesPage);
