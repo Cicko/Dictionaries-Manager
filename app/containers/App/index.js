@@ -8,24 +8,48 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { get } from 'lodash';
 
-import HomePage from 'containers/HomePage/Loadable';
-import NotFoundPage from 'containers/NotFoundPage/Loadable';
+import NotFoundPage from '../NotFoundPage/Loadable';
+import routes from './routes';
 
 import GlobalStyle from '../../global-styles';
 
-function App() {
-  return (
-    <div>
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route component={NotFoundPage} />
-      </Switch>
-      <GlobalStyle />
-    </div>
-  );
+import NavDrawer from '../../components/NavDrawer';
+import AppBar from '../../components/AppBar';
+
+class App extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    return nextProps.location.get('pathname')
+      !== this.props.location.get('pathname');
+  }
+
+  render() {
+    return (
+      <div>
+        <AppBar />
+        <NavDrawer open={this.props.drawerOpen} />
+        <Switch>
+          {routes.map(({ component, path }) => (
+            <Route exact key={path} path={path} component={component} />
+          ))}
+          <Route component={NotFoundPage} />
+        </Switch>
+        <GlobalStyle />
+      </div>
+    );
+  }
 }
 
-export default App;
+App.propTypes = {
+  location: PropTypes.object,
+  drawerOpen: PropTypes.bool,
+};
+
+export default connect(state => ({
+  location: state.getIn(['router', 'location']),
+  drawerOpen: get(state, 'generic.navDrawer.open', false),
+}))(App);

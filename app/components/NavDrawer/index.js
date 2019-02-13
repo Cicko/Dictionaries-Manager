@@ -7,18 +7,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
-import { fromJS } from 'immutable';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
+import { push } from 'connected-react-router/immutable';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import HomeIcon from '@material-ui/icons/Home';
-import MailIcon from '@material-ui/icons/Mail';
 import toggleNavDrawer from '../../containers/App/store/actions';
 import navItems from './navItems';
 
@@ -36,14 +33,18 @@ class NavDrawer extends React.Component {
     this.props.dispatch(toggleNavDrawer());
   };
 
+  handleClick = path => () => {
+    this.props.dispatch(push(path));
+  };
+
   render() {
     const { classes, open } = this.props;
 
     const sideList = (
       <div className={classes.list}>
         <List>
-          {navItems.map(({ label, Icon }) => (
-            <ListItem button key={label}>
+          {navItems.map(({ label, Icon, path }) => (
+            <ListItem button key={label} onClick={this.handleClick(path)}>
               <ListItemIcon> <Icon/> </ListItemIcon>
               <ListItemText primary={label} />
             </ListItem>

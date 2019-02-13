@@ -40,7 +40,9 @@ function SimpleAppBar(props) {
             className={classes.menuButton}
             color="inherit"
             aria-label="Menu"
-            onClick={() => { props.dispatch(toggleNavDrawer())}}
+            onClick={() => {
+              props.dispatch(toggleNavDrawer());
+            }}
           >
             <MenuIcon />
           </IconButton>

@@ -46,9 +46,6 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'dictionariesPage', reducer });
-
 export default compose(
-  withReducer,
   withConnect,
 )(DictionariesPage);

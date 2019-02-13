@@ -5,7 +5,6 @@
  *
  */
 
-import { fromJS } from 'immutable';
 import { NAV_DRAWER_TOGGLE } from './constants';
 
 const initialState = {
@@ -13,8 +12,6 @@ const initialState = {
     open: false,
   },
 };
-
-console.log(initialState);
 /**
  *
  * @param state

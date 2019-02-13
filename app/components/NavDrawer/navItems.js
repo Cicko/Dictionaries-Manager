@@ -5,9 +5,11 @@ export default [
   {
     Icon: HomeIcon,
     label: 'Home',
+    path: '/',
   },
   {
     Icon: BooksIcon,
     label: 'Dictionaries',
+    path: '/dictionaries',
   },
 ];
