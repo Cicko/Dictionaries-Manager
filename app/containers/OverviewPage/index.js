@@ -7,21 +7,24 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { get } from 'lodash';
 import Grid from '@material-ui/core/Grid';
 import Table from '../../components/Table';
+import messages from './messages';
 
 const styles = {
   tableContainer: {
-
+    padding: 100,
   },
 };
 
 /* eslint-disable react/prefer-stateless-function */
-class HomePage extends React.Component {
+class OverviewPage extends React.Component {
   render() {
     return (
       <Grid container>
@@ -29,7 +32,12 @@ class HomePage extends React.Component {
           container
           className={this.props.classes.tableContainer}
           justify="center"
+          alignContent="center"
+          direction="column"
         >
+          <Typography component="h3" variant="h4" gutterBottom>
+            <FormattedMessage {...messages.header} />
+          </Typography>
           <Grid>
             <Table />
           </Grid>
@@ -39,16 +47,14 @@ class HomePage extends React.Component {
   }
 }
 
-HomePage.propTypes = {
+OverviewPage.propTypes = {
   drawerOpen: PropTypes.bool,
   classes: PropTypes.object.isRequired,
 }
 
 export default compose(
-  connect(
-    state => ({
-      drawerOpen: get(state, 'generic.navDrawer.open', false),
-    })
-  ),
+  connect(state => ({
+    drawerOpen: state.getIn(['generic', 'navDrawer', 'open']),
+  })),
   withStyles(styles),
-)(HomePage);
+)(OverviewPage);

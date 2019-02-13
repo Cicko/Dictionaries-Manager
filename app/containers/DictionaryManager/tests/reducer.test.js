@@ -1,5 +1,5 @@
 import { fromJS } from 'immutable';
-import dictionaryManagerReducer from '../reducer';
+import dictionaryManagerReducer from '../store/reducer';
 
 describe('dictionaryManagerReducer', () => {
   it('returns the initial state', () => {

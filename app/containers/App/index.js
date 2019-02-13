@@ -11,15 +11,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { get } from 'lodash';
 
 import NotFoundPage from '../NotFoundPage/Loadable';
 import routes from './routes';
 
 import GlobalStyle from '../../global-styles';
 
-import NavDrawer from '../../components/NavDrawer';
-import AppBar from '../../components/AppBar';
+import { NavDrawer, AppBar } from '../../components';
 
 class App extends React.Component {
   shouldComponentUpdate(nextProps) {

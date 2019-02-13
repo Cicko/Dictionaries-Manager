@@ -11,6 +11,6 @@ export const scope = 'app.components.AppBar';
 export default defineMessages({
   header: {
     id: `${scope}.header`,
-    defaultMessage: 'Welcome to the Dictionary Management App',
+    defaultMessage: 'Dictionaries Management App',
   },
 });

@@ -5,9 +5,11 @@
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
 import genericReducer from 'containers/App/store/reducer';
 import dictionariesReducer from 'containers/DictionariesPage/store/reducer';
+import dictionaryManagerReducer from 'containers/DictionaryManager/store/reducer';
 
 export default {
   language: languageProviderReducer,
   generic: genericReducer,
   dictionaries: dictionariesReducer,
+  dictionaryManager: dictionaryManagerReducer,
 }

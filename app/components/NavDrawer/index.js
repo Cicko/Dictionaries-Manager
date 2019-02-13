@@ -17,7 +17,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { toggleNavDrawer } from '../../containers/App/store/actions';
-import navItems from './navItems';
+import navItems from '../../data/navItems';
 
 const styles = {
   list: {

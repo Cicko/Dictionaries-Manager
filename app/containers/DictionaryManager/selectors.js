@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { initialState } from './reducer';
+import { initialState } from './store/reducer';
 
 /**
  * Direct selector to the dictionaryManager state domain

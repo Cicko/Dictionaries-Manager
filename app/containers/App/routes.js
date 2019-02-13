@@ -4,7 +4,7 @@
  *  @date 2/13/19
  *
  */
-import HomePage from '../HomePage/Loadable';
+import HomePage from '../OverviewPage/Loadable';
 import DictionariesPage from '../DictionariesPage/Loadable';
 
 export default [

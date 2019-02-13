@@ -1,5 +1,5 @@
-import { defaultAction } from '../actions';
-import { DEFAULT_ACTION } from '../constants';
+import { defaultAction } from '../store/actions';
+import { DEFAULT_ACTION } from '../store/constants';
 
 describe('DictionaryManager actions', () => {
   describe('Default Action', () => {
