@@ -33,9 +33,12 @@ export class DictionariesPage extends React.Component {
     props.dispatch(addExistingDictionary(dictionaryOne));
   }
 
+  renderDictionary = dictionary => {
+    return <DictionaryManager dictionary={dictionary} />
+  };
+
   render() {
     const { classes, dictionaries } = this.props;
-    console.log(dictionaries);
     return (
       <Grid container>
         <Grid
@@ -49,9 +52,7 @@ export class DictionariesPage extends React.Component {
             <FormattedMessage {...messages.header} />
           </Typography>
           <Grid container className={classes.dictionariesContainer}>
-            <DictionaryManager />
-            <DictionaryManager />
-            <DictionaryManager />
+            {dictionaries.map(this.renderDictionary)}
           </Grid>
         </Grid>
       </Grid>

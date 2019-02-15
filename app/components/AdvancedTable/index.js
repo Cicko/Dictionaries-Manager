@@ -118,13 +118,13 @@ class AdvancedTable extends React.Component {
    * @returns {*}
    */
   renderTableBody = () => {
-    const { onSelectRow } = this.props;
+    const { onSelectRow, rows } = this.props;
     const { data, order, orderBy, rowsPerPage, page } = this.state;
     const emptyRows =
-      rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+      rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     return (
       <TableBody>
-        {stableSort(data, getSorting(order, orderBy))
+        {stableSort(rows, getSorting(order, orderBy))
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
           .map(row => {
             const isSelected = this.isSelected(row.id);
@@ -158,7 +158,7 @@ class AdvancedTable extends React.Component {
   };
 
   render() {
-    const { classes, onDeleteRows, title } = this.props;
+    const { classes, onDeleteRows, title, rows } = this.props;
     const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
 
     return (
@@ -176,7 +176,7 @@ class AdvancedTable extends React.Component {
               orderBy={orderBy}
               onSelectAllClick={this.handleSelectAllClick}
               onRequestSort={this.handleRequestSort}
-              rowCount={data.length}
+              rowCount={rows.length}
             />
             {this.renderTableBody()}
           </Table>
@@ -184,7 +184,7 @@ class AdvancedTable extends React.Component {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={data.length}
+          count={rows.length}
           rowsPerPage={rowsPerPage}
           page={page}
           backIconButtonProps={{

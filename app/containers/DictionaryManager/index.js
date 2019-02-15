@@ -36,14 +36,14 @@ class DictionaryManager extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, dictionary } = this.props;
     return (
       <Grid md={5} className={classes.container}>
         <AdvancedTable
-          title="cucu"
+          title={dictionary.name}
           onDeleteRows={this.handleDeleteRows}
           onSelectRow={this.handleSelectRow}
-          rows
+          rows={dictionary.rows}
         />
       </Grid>
     );
@@ -53,11 +53,11 @@ class DictionaryManager extends React.Component {
 DictionaryManager.propTypes = {
   dispatch: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
-  id: PropTypes.number,
+  dictionary: PropTypes.object,
 };
 
 DictionaryManager.defaultProps = {
-  id: 0,
+  dictionary: {},
 };
 
 export default compose(
