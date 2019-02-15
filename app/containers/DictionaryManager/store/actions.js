@@ -19,10 +19,11 @@ function setTableName(name) {
   };
 }
 
-function setTableRow(row) {
+function setTableRow(rowIndex, newRowData) {
   return {
     type: SET_ROW,
-    row,
+    newRowData,
+    rowIndex,
   };
 }
 
@@ -40,10 +41,10 @@ function removeTableRow(row) {
   };
 }
 
-function selectTableRow(row) {
+function selectTableRow(rowIndex) {
   return {
     type: SELECT_ROW,
-    row,
+    rowIndex,
   };
 }
 

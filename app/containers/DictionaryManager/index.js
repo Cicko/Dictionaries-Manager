@@ -23,8 +23,6 @@ const styles = {
 /* eslint-disable react/prefer-stateless-function */
 class DictionaryManager extends React.Component {
   handleSelectRow = (e, rowId) => {
-    console.log(rowId);
-    console.log(this.props);
     this.props.dispatch(
       selectTableRow(rowId),
       'DictionaryManager.handleSelectRow',

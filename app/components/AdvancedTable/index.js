@@ -57,7 +57,6 @@ class AdvancedTable extends React.Component {
     order: 'asc',
     orderBy: 'calories',
     selected: [],
-    data: [],
     page: 0,
     rowsPerPage: 5,
   };
@@ -98,7 +97,6 @@ class AdvancedTable extends React.Component {
         selected.slice(selectedIndex + 1),
       );
     }
-    console.log(newSelected);
 
     this.setState({ selected: newSelected });
   };
@@ -119,7 +117,7 @@ class AdvancedTable extends React.Component {
    */
   renderTableBody = () => {
     const { onSelectRow, rows } = this.props;
-    const { data, order, orderBy, rowsPerPage, page } = this.state;
+    const { order, orderBy, rowsPerPage, page } = this.state;
     const emptyRows =
       rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
     return (
@@ -159,7 +157,7 @@ class AdvancedTable extends React.Component {
 
   render() {
     const { classes, onDeleteRows, title, rows } = this.props;
-    const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
+    const { order, orderBy, selected, rowsPerPage, page } = this.state;
 
     return (
       <Paper className={classes.root}>
