@@ -21,6 +21,9 @@ const styles = {
   tableContainer: {
     padding: 100,
   },
+  dictionariesContainer: {
+    flexDirection: 'row',
+  },
 };
 
 /* eslint-disable react/prefer-stateless-function */
@@ -31,12 +34,13 @@ export class DictionariesPage extends React.Component {
   }
 
   render() {
-    console.log(this.props);
+    const { classes, dictionaries } = this.props;
+    console.log(dictionaries);
     return (
       <Grid container>
         <Grid
           container
-          className={this.props.classes.tableContainer}
+          className={classes.tableContainer}
           justify="center"
           alignContent="center"
           direction="column"
@@ -44,7 +48,9 @@ export class DictionariesPage extends React.Component {
           <Typography component="h3" variant="h4" gutterBottom>
             <FormattedMessage {...messages.header} />
           </Typography>
-          <Grid>
+          <Grid container className={classes.dictionariesContainer}>
+            <DictionaryManager />
+            <DictionaryManager />
             <DictionaryManager />
           </Grid>
         </Grid>
@@ -56,9 +62,12 @@ export class DictionariesPage extends React.Component {
 DictionariesPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
+  dictionaries: PropTypes.array,
 };
 
 export default compose(
-  connect(() => ({})),
+  connect((state) => ({
+    dictionaries: state.getIn(['dictionaries', 'dictionaries']).toArray(),
+  })),
   withStyles(styles),
 )(DictionariesPage);
