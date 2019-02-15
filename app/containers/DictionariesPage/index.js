@@ -14,6 +14,8 @@ import Typography from '@material-ui/core/Typography';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 import DictionaryManager from '../DictionaryManager';
+import dictionaryOne from '../../data/mockDictionaryOne';
+import { addExistingDictionary } from './store/actions';
 
 const styles = {
   tableContainer: {
@@ -23,6 +25,11 @@ const styles = {
 
 /* eslint-disable react/prefer-stateless-function */
 export class DictionariesPage extends React.Component {
+  constructor(props) {
+    super(props);
+    props.dispatch(addExistingDictionary(dictionaryOne));
+  }
+
   render() {
     console.log(this.props);
     return (

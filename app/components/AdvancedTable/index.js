@@ -58,48 +58,7 @@ class AdvancedTable extends React.Component {
     order: 'asc',
     orderBy: 'calories',
     selected: [],
-    data: [
-      {
-        id: 0,
-        domain: 'Golden green',
-        range: 'Green',
-      },
-      {
-        id: 1,
-        domain: 'Precious green',
-        range: 'Green',
-      },
-      {
-        id: 2,
-        domain: 'Marvelous green',
-        range: 'Green',
-      },
-      {
-        id: 3,
-        domain: 'Sadly red',
-        range: 'Red',
-      },
-      {
-        id: 4,
-        domain: 'Amazing blue',
-        range: 'Blue',
-      },
-      {
-        id: 5,
-        domain: 'Unbelievable orange',
-        range: 'Orange',
-      },
-      {
-        id: 6,
-        domain: 'Golden grey',
-        range: 'Grey',
-      },
-      {
-        id: 7,
-        domain: 'Dark white',
-        range: 'Black',
-      },
-    ],
+    data: [],
     page: 0,
     rowsPerPage: 5,
   };
