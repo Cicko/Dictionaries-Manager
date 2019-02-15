@@ -13,7 +13,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
-import { DictionaryManager } from '../DictionaryManager';
+import DictionaryManager from '../DictionaryManager';
 
 const styles = {
   tableContainer: {
@@ -24,6 +24,7 @@ const styles = {
 /* eslint-disable react/prefer-stateless-function */
 export class DictionariesPage extends React.Component {
   render() {
+    console.log(this.props);
     return (
       <Grid container>
         <Grid

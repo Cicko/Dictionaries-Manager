@@ -17,12 +17,6 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import { AdvancedTableToolbar, AdvancedTableHead } from './components';
 
-let counter = 0;
-function createData(name, calories, fat, carbs, protein) {
-  counter += 1;
-  return { id: counter, name, calories, fat, carbs, protein };
-}
-
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -146,6 +140,7 @@ class AdvancedTable extends React.Component {
         selected.slice(selectedIndex + 1),
       );
     }
+    console.log(newSelected);
 
     this.setState({ selected: newSelected });
   };
@@ -165,6 +160,7 @@ class AdvancedTable extends React.Component {
    * @returns {*}
    */
   renderTableBody = () => {
+    const { onSelectRow } = this.props;
     const { data, order, orderBy, rowsPerPage, page } = this.state;
     const emptyRows =
       rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
@@ -172,25 +168,25 @@ class AdvancedTable extends React.Component {
       <TableBody>
         {stableSort(data, getSorting(order, orderBy))
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-          .map(n => {
-            const isSelected = this.isSelected(n.id);
+          .map(row => {
+            const isSelected = this.isSelected(row.id);
             return (
               <TableRow
                 hover
-                onClick={event => this.handleClick(event, n.id)}
+                onClick={event => onSelectRow(event, row.id)}
                 role="checkbox"
                 aria-checked={isSelected}
                 tabIndex={-1}
-                key={n.id}
+                key={row.id}
                 selected={isSelected}
               >
                 <TableCell padding="checkbox">
                   <Checkbox checked={isSelected} />
                 </TableCell>
                 <TableCell component="th" scope="row" padding="none">
-                  {n.domain}
+                  {row.domain}
                 </TableCell>
-                <TableCell>{n.range}</TableCell>
+                <TableCell>{row.range}</TableCell>
               </TableRow>
             );
           })}
@@ -201,7 +197,7 @@ class AdvancedTable extends React.Component {
         )}
       </TableBody>
     );
-  }
+  };
 
   render() {
     const { classes, onDeleteRows, title } = this.props;
@@ -249,12 +245,15 @@ class AdvancedTable extends React.Component {
 
 AdvancedTable.propTypes = {
   classes: PropTypes.object.isRequired,
+  rows: PropTypes.array.isRequired,
   onDeleteRows: PropTypes.func,
+  onSelectRow: PropTypes.func,
   title: PropTypes.string,
 };
 
 AdvancedTable.defaultProps = {
   onDeleteRows: noop,
+  onSelectRow: noop,
   title: 'Default title',
 };
 

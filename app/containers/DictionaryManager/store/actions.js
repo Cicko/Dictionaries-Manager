@@ -4,7 +4,13 @@
  *
  */
 
-import { SET_NAME, SET_ROW, ADD_ROW, REMOVE_ROW } from './constants';
+import {
+  SET_NAME,
+  SET_ROW,
+  ADD_ROW,
+  REMOVE_ROW,
+  SELECT_ROW,
+} from './constants';
 
 function setTableName(name) {
   return {
@@ -34,9 +40,17 @@ function removeTableRow(row) {
   };
 }
 
+function selectTableRow(row) {
+  return {
+    type: SELECT_ROW,
+    row,
+  };
+}
+
 export {
   setTableName,
   setTableRow,
   removeTableRow,
   addTableRow,
+  selectTableRow,
 }
