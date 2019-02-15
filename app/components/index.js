@@ -6,11 +6,13 @@
  */
 
 import Table from './Table';
+import AdvancedTable from './AdvancedTable';
 import NavDrawer from './NavDrawer';
 import AppBar from './AppBar';
 
 export {
   Table,
+  AdvancedTable,
   NavDrawer,
   AppBar,
 }
