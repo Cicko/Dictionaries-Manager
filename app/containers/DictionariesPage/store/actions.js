@@ -4,10 +4,23 @@
  *
  */
 
-import { DEFAULT_ACTION } from './constants';
+import { ADD_DICTIONARY, REMOVE_DICTIONARY } from './constants';
 
-export function defaultAction() {
+function addDictionary(name) {
   return {
-    type: DEFAULT_ACTION,
+    type: ADD_DICTIONARY,
+    name,
   };
 }
+
+function removeDictionary(id) {
+  return {
+    type: REMOVE_DICTIONARY,
+    id,
+  };
+}
+
+export {
+  addDictionary,
+  removeDictionary,
+};

@@ -8,6 +8,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import noop from 'lodash/noop';
 import { withStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -35,9 +36,8 @@ const toolbarStyles = theme => ({
   },
 });
 
-const AdvancedTableToolbar = props => {
-  const { numSelected, classes, title } = props;
-
+const AdvancedTableToolbar = props =>  {
+  const { numSelected, classes, title, onDeleteRows } = props;
   return (
     <Toolbar
       className={classNames(classes.root, {
@@ -59,7 +59,7 @@ const AdvancedTableToolbar = props => {
       <div className={classes.actions}>
         {numSelected > 0 && (
           <Tooltip title="Delete">
-            <IconButton aria-label="Delete">
+            <IconButton aria-label="Delete" onClick={onDeleteRows}>
               <DeleteIcon />
             </IconButton>
           </Tooltip>
@@ -73,6 +73,11 @@ AdvancedTableToolbar.propTypes = {
   classes: PropTypes.object.isRequired,
   numSelected: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
+  onDeleteRows: PropTypes.func,
+};
+
+AdvancedTableToolbar.defaultProps = {
+  onDeleteRows: noop,
 };
 
 export default withStyles(toolbarStyles)(AdvancedTableToolbar);

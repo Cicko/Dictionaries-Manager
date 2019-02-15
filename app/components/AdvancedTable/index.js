@@ -6,6 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import noop from 'lodash/noop';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -203,12 +204,16 @@ class AdvancedTable extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, onDeleteRows, title } = this.props;
     const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
 
     return (
       <Paper className={classes.root}>
-        <AdvancedTableToolbar numSelected={selected.length} title="Cucu" />
+        <AdvancedTableToolbar
+          numSelected={selected.length}
+          title={title}
+          onDeleteRows={onDeleteRows}
+        />
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
             <AdvancedTableHead
@@ -244,6 +249,13 @@ class AdvancedTable extends React.Component {
 
 AdvancedTable.propTypes = {
   classes: PropTypes.object.isRequired,
+  onDeleteRows: PropTypes.func,
+  title: PropTypes.string,
+};
+
+AdvancedTable.defaultProps = {
+  onDeleteRows: noop,
+  title: 'Default title',
 };
 
 export default withStyles(styles)(AdvancedTable);
