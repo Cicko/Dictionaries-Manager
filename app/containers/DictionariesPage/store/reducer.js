@@ -35,7 +35,10 @@ function dictionariesPageReducer(state = initialState, action) {
       return state.update('dictionaries', dictionaries =>
         dictionaries.push({
           id: dictionaries.size,
-          ...action.dictionary,
+          rows: action.dictionary.rows.map(row => ({
+            ...row,
+            selected: false,
+          })),
         }),
       );
     case REMOVE_DICTIONARY:
@@ -45,8 +48,11 @@ function dictionariesPageReducer(state = initialState, action) {
     case ADD_ROW:
       return state.update('dictionaries', dictionaries =>
         dictionaries.update(action.tableId, dictionary =>
-          dictionary.update('rows',
-            rows => rows.push(action.row),
+          dictionary.update('rows', rows =>
+            rows.push({
+              ...action.row,
+              selected: false,
+            }),
           ),
         ),
       );
@@ -71,13 +77,13 @@ function dictionariesPageReducer(state = initialState, action) {
       return state.update('dictionaries', dictionaries =>
         dictionaries.update(action.tableId, dictionary => ({
           ...dictionary,
-          rows: dictionary.rows.map((row, index) =>
-            index === action.rowIndex
-              ? ({
-                ...row,
-                selected: !has(row, 'selected') ? true : !row.selected,
-              })
-              : row,
+          rows: dictionary.rows.map(
+            (row, index) =>
+              index === action.rowIndex ?
+                ({
+                  ...row,
+                  selected: !row.selected,
+                }) : row,
           ),
         })),
       );

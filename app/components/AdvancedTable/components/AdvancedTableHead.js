@@ -25,22 +25,14 @@ class AdvancedTableHead extends React.Component {
 
   render() {
     const {
-      onSelectAllClick,
       order,
       orderBy,
-      numSelected,
-      rowCount,
     } = this.props;
 
     return (
       <TableHead>
         <TableRow>
           <TableCell padding="checkbox">
-            <Checkbox
-              indeterminate={numSelected > 0 && numSelected < rowCount}
-              checked={numSelected === rowCount}
-              onChange={onSelectAllClick}
-            />
           </TableCell>
           {rows.map(
             row => (
@@ -71,12 +63,9 @@ class AdvancedTableHead extends React.Component {
 }
 
 AdvancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.string.isRequired,
   orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
 };
 
 export default AdvancedTableHead;

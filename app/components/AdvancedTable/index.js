@@ -56,7 +56,6 @@ class AdvancedTable extends React.Component {
   state = {
     order: 'asc',
     orderBy: 'calories',
-    selected: [],
     page: 0,
     rowsPerPage: 5,
   };
@@ -109,7 +108,7 @@ class AdvancedTable extends React.Component {
     this.setState({ rowsPerPage: event.target.value });
   };
 
-  isSelected = id => this.state.selected.indexOf(id) !== -1;
+  numberOfSelected = () => this.props.rows.filter(row => row.selected).length;
 
   /**
    * Render the body of the Table
@@ -125,19 +124,19 @@ class AdvancedTable extends React.Component {
         {stableSort(rows, getSorting(order, orderBy))
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
           .map(row => {
-            const isSelected = this.isSelected(row.id);
+            console.log(row.selected);
             return (
               <TableRow
                 hover
                 onClick={event => onSelectRow(event, row.id)}
                 role="checkbox"
-                aria-checked={isSelected}
+                aria-checked={row.selected}
                 tabIndex={-1}
                 key={row.id}
-                selected={isSelected}
+                selected={row.selected}
               >
                 <TableCell padding="checkbox">
-                  <Checkbox checked={isSelected} />
+                  <Checkbox checked={row.selected} />
                 </TableCell>
                 <TableCell component="th" scope="row" padding="none">
                   {row.domain}
@@ -157,19 +156,20 @@ class AdvancedTable extends React.Component {
 
   render() {
     const { classes, onDeleteRows, title, rows } = this.props;
-    const { order, orderBy, selected, rowsPerPage, page } = this.state;
+    const { order, orderBy, rowsPerPage, page } = this.state;
+    const numberOfSelected = this.numberOfSelected();
 
     return (
       <Paper className={classes.root}>
         <AdvancedTableToolbar
-          numSelected={selected.length}
+          numSelected={numberOfSelected}
           title={title}
           onDeleteRows={onDeleteRows}
         />
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
             <AdvancedTableHead
-              numSelected={selected.length}
+              numSelected={numberOfSelected}
               order={order}
               orderBy={orderBy}
               onSelectAllClick={this.handleSelectAllClick}
