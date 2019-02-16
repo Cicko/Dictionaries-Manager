@@ -8,6 +8,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Map, List } from 'immutable';
 import { compose } from 'recompose';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -20,7 +21,7 @@ import messages from './messages';
 import DictionaryManager from '../DictionaryManager';
 import dictionaryOne from '../../data/mockDictionaryOne';
 import { InputFieldDialog } from '../../components';
-import { addExistingDictionary } from './store/actions';
+import { addExistingDictionary, addDictionary } from './store/actions';
 
 const styles = (theme) => ({
   tableContainer: {
@@ -46,15 +47,21 @@ export class DictionariesPage extends React.Component {
     props.dispatch(addExistingDictionary(dictionaryOne));
   }
 
-  handleNewDictionary = () => {
+  createNewDictionary = name => {
+    this.closeDialogForNewDictionary();
+    this.props.dispatch(addDictionary(name));
+  };
+
+  openDialogForNewDictionary = () => {
     this.setState({
       creatingNewTable: true,
     });
   };
 
-  createNewDictionary = (e) => {
-    console.log(e);
-
+  closeDialogForNewDictionary = () => {
+    this.setState({
+      creatingNewTable: false,
+    });
   };
 
   renderDictionary = dictionary =>
@@ -76,7 +83,6 @@ export class DictionariesPage extends React.Component {
           </Typography>
           <Grid container className={classes.dictionariesContainer}>
             {dictionaries.map(this.renderDictionary)}
-            {dictionaries.map(this.renderDictionary)}
           </Grid>
         </Grid>
         <Tooltip title="Add Dictionary" aria-label="Add dictionary">
@@ -84,7 +90,7 @@ export class DictionariesPage extends React.Component {
             color="primary"
             aria-label="Add"
             className={classes.fab}
-            onClick={this.handleNewDictionary}
+            onClick={this.openDialogForNewDictionary}
           >
             <AddIcon />
           </Fab>

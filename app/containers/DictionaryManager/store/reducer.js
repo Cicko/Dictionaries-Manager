@@ -5,6 +5,7 @@
  */
 
 import { fromJS, List } from 'immutable';
+import { has } from 'lodash';
 import { SET_ROW, SET_NAME, ADD_ROW, REMOVE_ROW, SELECT_ROW } from './constants';
 
 export const initialState = fromJS({
@@ -27,10 +28,10 @@ function dictionaryManagerReducer(state = initialState, action) {
         })),
       );
     case SELECT_ROW:
-      return state.updateIn('rows', rows =>
+      return state.update('rows', rows =>
         rows.update(action.rowIndex, row => ({
           ...row,
-          selected: !row.selected,
+          selected: !has(row, 'selected') ? true : !row.selected,
         })),
       );
     case REMOVE_ROW:

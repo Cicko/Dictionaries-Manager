@@ -6,13 +6,14 @@
  */
 
 import React from 'react';
+import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { withStyles } from '@material-ui/core/styles';
 import { AdvancedTable } from '../../components';
-import { selectTableRow } from './store/actions';
+import { selectTableRow } from '../DictionariesPage/store/actions';
 
 const styles = {
   container: {
@@ -23,9 +24,9 @@ const styles = {
 
 /* eslint-disable react/prefer-stateless-function */
 class DictionaryManager extends React.Component {
-  handleSelectRow = (e, rowId) => {
+  handleSelectRow = tableId => (e, rowId) => {
     this.props.dispatch(
-      selectTableRow(rowId),
+      selectTableRow(tableId, rowId),
       'DictionaryManager.handleSelectRow',
     );
   };
@@ -41,7 +42,7 @@ class DictionaryManager extends React.Component {
         <AdvancedTable
           title={dictionary.name}
           onDeleteRows={this.handleDeleteRows}
-          onSelectRow={this.handleSelectRow}
+          onSelectRow={this.handleSelectRow(dictionary.id)}
           rows={dictionary.rows}
         />
       </Grid>

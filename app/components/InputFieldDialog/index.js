@@ -29,8 +29,12 @@ class InputFieldDialog extends React.Component {
     });
   };
 
+  submitNewTable = () => {
+    this.props.onCreate(this.state.value);
+  };
+
   render() {
-    const { open, onClose, onCreate, title } = this.props;
+    const { open, onClose, title } = this.props;
     return (
       <div>
         <Dialog
@@ -54,7 +58,7 @@ class InputFieldDialog extends React.Component {
             <Button onClick={onClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={() => { onCreate(this.state.value)}} color="primary">
+            <Button onClick={this.submitNewTable} color="primary">
               Create
             </Button>
           </DialogActions>
