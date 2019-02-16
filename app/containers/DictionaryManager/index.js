@@ -32,6 +32,7 @@ class DictionaryManager extends React.Component {
 
   handleDeleteRows = () => {
     console.log('delete rows');
+    console.log(3);
   };
 
   render() {

@@ -123,28 +123,25 @@ class AdvancedTable extends React.Component {
       <TableBody>
         {stableSort(rows, getSorting(order, orderBy))
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-          .map(row => {
-            console.log(row.selected);
-            return (
-              <TableRow
-                hover
-                onClick={event => onSelectRow(event, row.id)}
-                role="checkbox"
-                aria-checked={row.selected}
-                tabIndex={-1}
-                key={row.id}
-                selected={row.selected}
-              >
-                <TableCell padding="checkbox">
-                  <Checkbox checked={row.selected} />
-                </TableCell>
-                <TableCell component="th" scope="row" padding="none">
-                  {row.domain}
-                </TableCell>
-                <TableCell>{row.range}</TableCell>
-              </TableRow>
-            );
-          })}
+          .map(row => (
+            <TableRow
+              hover
+              onClick={event => onSelectRow(event, row.id)}
+              role="checkbox"
+              aria-checked={row.selected}
+              tabIndex={-1}
+              key={row.id}
+              selected={row.selected}
+            >
+              <TableCell padding="checkbox">
+                <Checkbox checked={row.selected} />
+              </TableCell>
+              <TableCell component="th" scope="row" padding="none">
+                {row.domain}
+              </TableCell>
+              <TableCell>{row.range}</TableCell>
+            </TableRow>
+          ))}
         {emptyRows > 0 && (
           <TableRow style={{ height: 49 * emptyRows }}>
             <TableCell colSpan={6} />

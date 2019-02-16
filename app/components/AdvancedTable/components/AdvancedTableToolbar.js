@@ -14,6 +14,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
+import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 
@@ -36,8 +37,8 @@ const toolbarStyles = theme => ({
   },
 });
 
-const AdvancedTableToolbar = props =>  {
-  const { numSelected, classes, title, onDeleteRows } = props;
+const AdvancedTableToolbar = props => {
+  const { numSelected, classes, title, onDeleteRows, onAddRow } = props;
   return (
     <Toolbar
       className={classNames(classes.root, {
@@ -64,6 +65,13 @@ const AdvancedTableToolbar = props =>  {
             </IconButton>
           </Tooltip>
         )}
+        {numSelected === 0 && (
+          <Tooltip title="Add row">
+            <IconButton aria-label="Add row" onClick={onAddRow}>
+              <AddIcon />
+            </IconButton>
+          </Tooltip>
+        )}
       </div>
     </Toolbar>
   );
@@ -73,10 +81,12 @@ AdvancedTableToolbar.propTypes = {
   classes: PropTypes.object.isRequired,
   numSelected: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
+  onAddRow: PropTypes.func,
   onDeleteRows: PropTypes.func,
 };
 
 AdvancedTableToolbar.defaultProps = {
+  onAddRow: noop,
   onDeleteRows: noop,
 };
 
