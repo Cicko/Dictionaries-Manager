@@ -20,7 +20,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import messages from './messages';
 import DictionaryManager from '../DictionaryManager';
 import dictionaryOne from '../../data/mockDictionaryOne';
-import { InputFieldDialog } from '../../components';
+import { FormDialog } from '../../components';
 import { addExistingDictionary, addDictionary } from './store/actions';
 
 const styles = (theme) => ({
@@ -47,7 +47,7 @@ export class DictionariesPage extends React.Component {
     props.dispatch(addExistingDictionary(dictionaryOne));
   }
 
-  createNewDictionary = name => {
+  createNewDictionary = ({ name }) => {
     this.closeDialogForNewDictionary();
     this.props.dispatch(addDictionary(name));
   };
@@ -95,13 +95,20 @@ export class DictionariesPage extends React.Component {
             <AddIcon />
           </Fab>
         </Tooltip>
-        <InputFieldDialog
+        <FormDialog
           title="Introduce name of the new dictionary"
           open={this.state.creatingNewTable}
           onClose={() => {
             this.setState({ creatingNewTable: false })
           }}
           onCreate={this.createNewDictionary}
+          fields={[
+            {
+              id: 'name',
+              label: 'Table name',
+              type: 'input',
+            },
+          ]}
         />
       </Grid>
     );

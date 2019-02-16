@@ -14,27 +14,43 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-class InputFieldDialog extends React.Component {
+class FormDialog extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      value: props.value,
+      values: props.values,
     };
   }
 
-  handleInputChange = e => {
-    this.setState({
-      value: e.target.value,
-    });
+  handleInputChange = fieldId => e => {
+    const { value } = e.target;
+    this.setState(({ values }) => ({
+      values: {
+        ...values,
+        [fieldId]: value,
+      },
+    }));
   };
 
   submitNewTable = () => {
-    this.props.onCreate(this.state.value);
+    this.props.onCreate(this.state.values);
   };
 
+  renderField = field => (
+    <TextField
+      autoFocus
+      margin="dense"
+      id={field.id}
+      label={field.label}
+      value={this.state.values[field.id]}
+      onChange={this.handleInputChange(field.id)}
+      fullWidth
+    />
+  );
+
   render() {
-    const { open, onClose, title } = this.props;
+    const { open, onClose, title, fields } = this.props;
     return (
       <div>
         <Dialog
@@ -44,15 +60,7 @@ class InputFieldDialog extends React.Component {
         >
           <DialogTitle id="form-dialog-title">{title}</DialogTitle>
           <DialogContent>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label="Table name"
-              value={this.state.value}
-              onChange={this.handleInputChange}
-              fullWidth
-            />
+            {fields.map(this.renderField)}
           </DialogContent>
           <DialogActions>
             <Button onClick={onClose} color="primary">
@@ -66,21 +74,22 @@ class InputFieldDialog extends React.Component {
       </div>
     );
   }
-};
+}
 
-InputFieldDialog.propTypes = {
+FormDialog.propTypes = {
   open: PropTypes.bool,
   title: PropTypes.string,
   onCreate: PropTypes.func,
   onClose: PropTypes.func,
-  value: PropTypes.string,
+  values: PropTypes.object,
+  fields: PropTypes.array.isRequired,
 };
 
-InputFieldDialog.defaultProps = {
+FormDialog.defaultProps = {
   open: false,
   onCreate: noop,
   onClose: noop,
-  value: '',
+  values: {},
 };
 
-export default InputFieldDialog;
+export default FormDialog;

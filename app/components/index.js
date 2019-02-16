@@ -6,7 +6,7 @@
  */
 
 import Table from './Table';
-import InputFieldDialog from './InputFieldDialog';
+import FormDialog from './FormDialog';
 import AdvancedTable from './AdvancedTable';
 import NavDrawer from './NavDrawer';
 import AppBar from './AppBar';
@@ -16,5 +16,5 @@ export {
   AdvancedTable,
   NavDrawer,
   AppBar,
-  InputFieldDialog,
-}
+  FormDialog,
+};

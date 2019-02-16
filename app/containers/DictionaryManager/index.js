@@ -30,6 +30,10 @@ class DictionaryManager extends React.Component {
     );
   };
 
+  handleAddRowButtonClick = () => {
+    console.log('Add row button click');
+  };
+
   handleDeleteRows = () => {
     console.log('delete rows');
     console.log(3);
@@ -41,6 +45,7 @@ class DictionaryManager extends React.Component {
       <Grid md={5} lg={3} className={classes.container}>
         <AdvancedTable
           title={dictionary.name}
+          onAddRow={this.handleAddRowButtonClick}
           onDeleteRows={this.handleDeleteRows}
           onSelectRow={this.handleSelectRow(dictionary.id)}
           rows={dictionary.rows}

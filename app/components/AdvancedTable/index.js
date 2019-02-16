@@ -152,7 +152,7 @@ class AdvancedTable extends React.Component {
   };
 
   render() {
-    const { classes, onDeleteRows, title, rows } = this.props;
+    const { classes, onDeleteRows, onAddRow, title, rows } = this.props;
     const { order, orderBy, rowsPerPage, page } = this.state;
     const numberOfSelected = this.numberOfSelected();
 
@@ -162,6 +162,7 @@ class AdvancedTable extends React.Component {
           numSelected={numberOfSelected}
           title={title}
           onDeleteRows={onDeleteRows}
+          onAddRow={onAddRow}
         />
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
@@ -202,9 +203,11 @@ AdvancedTable.propTypes = {
   onDeleteRows: PropTypes.func,
   onSelectRow: PropTypes.func,
   title: PropTypes.string,
+  onAddRow: PropTypes.func,
 };
 
 AdvancedTable.defaultProps = {
+  onAddRow: noop,
   onDeleteRows: noop,
   onSelectRow: noop,
   title: 'Default title',
