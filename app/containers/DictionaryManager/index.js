@@ -12,9 +12,8 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { withStyles } from '@material-ui/core/styles';
 import { AdvancedTable } from '../../components';
-import { selectTableRow } from '../DictionariesPage/store/actions';
+import { addTableRow, removeTableRow, selectTableRow } from '../DictionariesPage/store/actions';
 import FormDialog from '../../components/FormDialog';
-import { addTableRow } from '../DictionariesPage/store/actions';
 
 const styles = {
   container: {
@@ -33,9 +32,9 @@ class DictionaryManager extends React.Component {
     };
   }
 
-  handleSelectRow = tableId => (e, rowId) => {
+  handleSelectRow = tableId => (e, rowIndex) => {
     this.props.dispatch(
-      selectTableRow(tableId, rowId),
+      selectTableRow(tableId, rowIndex),
       'DictionaryManager.handleSelectRow',
     );
   };
@@ -52,8 +51,7 @@ class DictionaryManager extends React.Component {
   };
 
   handleDeleteRows = () => {
-    console.log('delete rows');
-    console.log(3);
+    this.props.dispatch(removeTableRow(this.props.dictionary.id));
   };
 
   closeAddNewRowDialog = () => {

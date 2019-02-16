@@ -1,5 +1,0 @@
-/*
- *
- * DictionaryManager constants
- *
- */

@@ -123,10 +123,10 @@ class AdvancedTable extends React.Component {
       <TableBody>
         {stableSort(rows, getSorting(order, orderBy))
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-          .map(row => (
+          .map((row, index) => (
             <TableRow
               hover
-              onClick={event => onSelectRow(event, row.id)}
+              onClick={event => onSelectRow(event, index)}
               role="checkbox"
               aria-checked={row.selected}
               tabIndex={-1}

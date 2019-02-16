@@ -94,8 +94,7 @@ function dictionariesPageReducer(state = initialState, action) {
       return state.update('dictionaries', dictionaries =>
         dictionaries.update(action.tableId, dictionary => ({
           ...dictionary,
-          rows: dictionary.rows.filter((row, index) =>
-            index !== action.rowIndex),
+          rows: dictionary.rows.filter(row => !row.selected),
         })),
       );
     default:

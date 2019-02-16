@@ -70,11 +70,10 @@ function addTableRow(tableId, row) {
   };
 }
 
-function removeTableRow(tableId, row) {
+function removeTableRow(tableId) {
   return {
     type: REMOVE_ROW,
     tableId,
-    row,
   };
 }
 
