@@ -5,7 +5,6 @@
  */
 
 import { fromJS, List } from 'immutable';
-import { has } from 'lodash';
 import {
   ADD_DICTIONARY,
   ADD_EXISTING_DICTIONARY,
@@ -47,14 +46,17 @@ function dictionariesPageReducer(state = initialState, action) {
       );
     case ADD_ROW:
       return state.update('dictionaries', dictionaries =>
-        dictionaries.update(action.tableId, dictionary =>
-          dictionary.update('rows', rows =>
-            rows.push({
+        dictionaries.update(action.tableId, dictionary => ({
+          ...dictionary,
+          rows: [
+            ...dictionary.rows,
+            {
               ...action.row,
+              id: dictionary.rows.length,
               selected: false,
-            }),
-          ),
-        ),
+            },
+          ],
+        })),
       );
     case SET_NAME:
       return state.update('dictionaries', dictionaries =>
@@ -79,11 +81,12 @@ function dictionariesPageReducer(state = initialState, action) {
           ...dictionary,
           rows: dictionary.rows.map(
             (row, index) =>
-              index === action.rowIndex ?
-                ({
+              index === action.rowIndex
+                ? ({
                   ...row,
                   selected: !row.selected,
-                }) : row,
+                })
+                : row,
           ),
         })),
       );
@@ -91,7 +94,8 @@ function dictionariesPageReducer(state = initialState, action) {
       return state.update('dictionaries', dictionaries =>
         dictionaries.update(action.tableId, dictionary => ({
           ...dictionary,
-          rows: dictionary.rows.filter((row, index) => index !== action.rowIndex),
+          rows: dictionary.rows.filter((row, index) =>
+            index !== action.rowIndex),
         })),
       );
     default:

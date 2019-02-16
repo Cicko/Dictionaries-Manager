@@ -13,6 +13,8 @@ import { compose } from 'recompose';
 import { withStyles } from '@material-ui/core/styles';
 import { AdvancedTable } from '../../components';
 import { selectTableRow } from '../DictionariesPage/store/actions';
+import FormDialog from '../../components/FormDialog';
+import { addTableRow } from '../DictionariesPage/store/actions';
 
 const styles = {
   container: {
@@ -23,6 +25,14 @@ const styles = {
 
 /* eslint-disable react/prefer-stateless-function */
 class DictionaryManager extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      addingNewRow: false,
+    };
+  }
+
   handleSelectRow = tableId => (e, rowId) => {
     this.props.dispatch(
       selectTableRow(tableId, rowId),
@@ -31,12 +41,25 @@ class DictionaryManager extends React.Component {
   };
 
   handleAddRowButtonClick = () => {
-    console.log('Add row button click');
+    this.setState({
+      addingNewRow: true,
+    });
+  };
+
+  addingNewRow = values => {
+    this.closeAddNewRowDialog();
+    this.props.dispatch(addTableRow(this.props.dictionary.id, values));
   };
 
   handleDeleteRows = () => {
     console.log('delete rows');
     console.log(3);
+  };
+
+  closeAddNewRowDialog = () => {
+    this.setState({
+      addingNewRow: false,
+    });
   };
 
   render() {
@@ -49,6 +72,26 @@ class DictionaryManager extends React.Component {
           onDeleteRows={this.handleDeleteRows}
           onSelectRow={this.handleSelectRow(dictionary.id)}
           rows={dictionary.rows}
+        />
+        <FormDialog
+          title="Introduce name of the new dictionary"
+          open={this.state.addingNewRow}
+          onClose={() => {
+            this.setState({ addingNewRow: false })
+          }}
+          onCreate={this.addingNewRow}
+          fields={[
+            {
+              id: 'domain',
+              label: 'Domain',
+              type: 'input',
+            },
+            {
+              id: 'range',
+              label: 'Range',
+              type: 'input',
+            },
+          ]}
         />
       </Grid>
     );
