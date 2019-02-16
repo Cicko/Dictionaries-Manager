@@ -1,6 +1,7 @@
 /**
- *
- * DictionaryManager
+ *  Created by
+ *  @author Rudolf Cicko
+ *  @date 2/15/19
  *
  */
 
@@ -36,7 +37,7 @@ class DictionaryManager extends React.Component {
   render() {
     const { classes, dictionary } = this.props;
     return (
-      <Grid md={5} className={classes.container}>
+      <Grid md={5} lg={3} className={classes.container}>
         <AdvancedTable
           title={dictionary.name}
           onDeleteRows={this.handleDeleteRows}

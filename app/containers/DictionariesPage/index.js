@@ -1,6 +1,7 @@
 /**
- *
- * DictionariesPage
+ *  Created by
+ *  @author Rudolf Cicko
+ *  @date 2/15/19
  *
  */
 
@@ -18,6 +19,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import messages from './messages';
 import DictionaryManager from '../DictionaryManager';
 import dictionaryOne from '../../data/mockDictionaryOne';
+import { InputFieldDialog } from '../../components';
 import { addExistingDictionary } from './store/actions';
 
 const styles = (theme) => ({
@@ -38,11 +40,21 @@ const styles = (theme) => ({
 export class DictionariesPage extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      creatingNewTable: false,
+    };
     props.dispatch(addExistingDictionary(dictionaryOne));
   }
 
   handleNewDictionary = () => {
-    console.log('new dictionary');
+    this.setState({
+      creatingNewTable: true,
+    });
+  };
+
+  createNewDictionary = (e) => {
+    console.log(e);
+
   };
 
   renderDictionary = dictionary =>
@@ -68,10 +80,23 @@ export class DictionariesPage extends React.Component {
           </Grid>
         </Grid>
         <Tooltip title="Add Dictionary" aria-label="Add dictionary">
-          <Fab color="primary" aria-label="Add" className={classes.fab} onClick={this.handleNewDictionary}>
+          <Fab
+            color="primary"
+            aria-label="Add"
+            className={classes.fab}
+            onClick={this.handleNewDictionary}
+          >
             <AddIcon />
           </Fab>
         </Tooltip>
+        <InputFieldDialog
+          title="Introduce name of the new dictionary"
+          open={this.state.creatingNewTable}
+          onClose={() => {
+            this.setState({ creatingNewTable: false })
+          }}
+          onCreate={this.createNewDictionary}
+        />
       </Grid>
     );
   }

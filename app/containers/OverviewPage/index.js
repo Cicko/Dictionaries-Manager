@@ -12,9 +12,8 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import { get } from 'lodash';
 import Grid from '@material-ui/core/Grid';
-import Table from '../../components/Table';
+import { Table } from '../../components';
 import messages from './messages';
 
 const styles = {
