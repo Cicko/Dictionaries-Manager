@@ -8,7 +8,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Map, List } from 'immutable';
 import { compose } from 'recompose';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -19,7 +18,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Tooltip from '@material-ui/core/Tooltip';
 import messages from './messages';
 import DictionaryManager from '../DictionaryManager';
-import dictionaryOne from '../../data/mockDictionaryOne';
+import mockDictionary from '../../data/mockDictionaryOne';
 import { FormDialog } from '../../components';
 import { addExistingDictionary, addDictionary } from './store/actions';
 
@@ -45,7 +44,7 @@ export class DictionariesPage extends React.Component {
       creatingNewTable: false,
     };
     if (props.dictionaries.length === 0) {
-      props.dispatch(addExistingDictionary(dictionaryOne));
+      props.dispatch(addExistingDictionary(mockDictionary));
     }
   }
 
@@ -101,7 +100,7 @@ export class DictionariesPage extends React.Component {
           title="Introduce name of the new dictionary"
           open={this.state.creatingNewTable}
           onClose={() => {
-            this.setState({ creatingNewTable: false })
+            this.setState({ creatingNewTable: false });
           }}
           onCreate={this.createNewDictionary}
           fields={[

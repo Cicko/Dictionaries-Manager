@@ -24,7 +24,7 @@ export default {
   rows: [
     {
       product: 'Apple iPhone 6s',
-      color: 'Stonegrey',
+      color: 'Golden green',
       price: 'CHF 769',
     },
     {

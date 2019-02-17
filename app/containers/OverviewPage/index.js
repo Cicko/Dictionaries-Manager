@@ -7,6 +7,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { find } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
@@ -35,13 +36,35 @@ class OverviewPage extends React.Component {
 
     this.state = {
       currentDictionary: -1,
+      rows: mockData.rows,
+      headers: mockData.headers,
     };
   }
 
   handleChange = e => {
+    const dictionaries = this.props.dictionaries.toArray();
+    if (e.target.value === '') {
+      this.setState({
+        currentDictionary: -1,
+        rows: mockData.rows,
+      });
+      return;
+    }
+    const dictionaryId = e.target.value;
     this.setState({
-      currentDictionary: e.target.value,
+      currentDictionary: dictionaryId,
+      rows: mockData.rows.map(row => ({
+        ...row,
+        color: this.translate(row.color, find(dictionaries,
+          dictionary => dictionary.id === dictionaryId)),
+      })),
     });
+  };
+
+  translate = (word, dictionary) => {
+    const found = find(dictionary.rows, row => row.domain === word);
+    if (!found) return word;
+    return found.range;
   };
 
   renderSelectItem = dictionary => (
@@ -78,7 +101,7 @@ class OverviewPage extends React.Component {
             <FormattedMessage {...messages.header} />
           </Typography>
           <Grid>
-            <Table rows={mockData.rows} headers={mockData.headers}/>
+            <Table rows={this.state.rows} headers={this.state.headers}/>
           </Grid>
           <Grid justify="center" className={this.props.classes.selectContainer}>
             <Typography component="h5" variant="h5" gutterBottom>
