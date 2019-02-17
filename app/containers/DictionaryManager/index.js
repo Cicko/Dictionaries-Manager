@@ -13,7 +13,7 @@ import { compose } from 'recompose';
 import { withStyles } from '@material-ui/core/styles';
 import { AdvancedTable } from '../../components';
 import { addTableRow, removeTableRow, selectTableRow, removeDictionary } from '../DictionariesPage/store/actions';
-import FormDialog from '../../components/FormDialog';
+import Dialog from '../../components/Dialog';
 import validate from './utils/validation';
 
 const styles = {
@@ -30,6 +30,7 @@ class DictionaryManager extends React.Component {
 
     this.state = {
       addingNewRow: false,
+      deletingDictionary: false,
       error: {},
     };
   }
@@ -64,8 +65,17 @@ class DictionaryManager extends React.Component {
     if (this.numSelected() > 0) {
       this.props.dispatch(removeTableRow(this.props.dictionary.id));
     } else {
-      this.props.dispatch(removeDictionary(this.props.dictionary.id));
+      this.setState({
+        deletingDictionary: true,
+      });
     }
+  };
+
+  deleteDictionary = () => {
+    this.setState({
+      deletingDictionary: false,
+    });
+    this.props.dispatch(removeDictionary(this.props.dictionary.id));
   };
 
   numSelected = () => this.props.dictionary.rows.filter(row => row.selected).length;
@@ -87,12 +97,12 @@ class DictionaryManager extends React.Component {
           onSelectRow={this.handleSelectRow(dictionary.id)}
           rows={dictionary.rows}
         />
-        <FormDialog
+        <Dialog
           title="Introduce name of the new dictionary"
           error={this.state.error}
           open={this.state.addingNewRow}
           onClose={() => {
-            this.setState({ addingNewRow: false })
+            this.setState({ addingNewRow: false });
           }}
           onCreate={this.addingNewRow}
           fields={[
@@ -107,6 +117,14 @@ class DictionaryManager extends React.Component {
               type: 'input',
             },
           ]}
+        />
+        <Dialog
+          open={this.state.deletingDictionary}
+          onClose={() => {
+            this.setState({ deletingDictionary: false });
+          }}
+          title="Are you sure you want do delete this dictionary?"
+          onCreate={this.deleteDictionary}
         />
       </Grid>
     );

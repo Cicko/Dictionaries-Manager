@@ -14,7 +14,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-class FormDialog extends React.Component {
+class CustomDialog extends React.Component {
   constructor(props) {
     super(props);
 
@@ -78,22 +78,23 @@ class FormDialog extends React.Component {
   }
 }
 
-FormDialog.propTypes = {
+CustomDialog.propTypes = {
   open: PropTypes.bool,
   title: PropTypes.string,
   onCreate: PropTypes.func,
   onClose: PropTypes.func,
   values: PropTypes.object,
-  fields: PropTypes.array.isRequired,
+  fields: PropTypes.array,
   error: PropTypes.object,
 };
 
-FormDialog.defaultProps = {
+CustomDialog.defaultProps = {
   open: false,
   onCreate: noop,
   onClose: noop,
   values: {},
   error: {},
+  fields: [],
 };
 
-export default FormDialog;
+export default CustomDialog;

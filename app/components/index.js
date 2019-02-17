@@ -6,7 +6,7 @@
  */
 
 import Table from './Table';
-import FormDialog from './FormDialog';
+import FormDialog from './Dialog';
 import AdvancedTable from './AdvancedTable';
 import NavDrawer from './NavDrawer';
 import AppBar from './AppBar';
