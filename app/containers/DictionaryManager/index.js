@@ -14,6 +14,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { AdvancedTable } from '../../components';
 import { addTableRow, removeTableRow, selectTableRow } from '../DictionariesPage/store/actions';
 import FormDialog from '../../components/FormDialog';
+import validate from './utils/validation';
 
 const styles = {
   container: {
@@ -29,6 +30,7 @@ class DictionaryManager extends React.Component {
 
     this.state = {
       addingNewRow: false,
+      error: {},
     };
   }
 
@@ -46,8 +48,16 @@ class DictionaryManager extends React.Component {
   };
 
   addingNewRow = values => {
-    this.closeAddNewRowDialog();
-    this.props.dispatch(addTableRow(this.props.dictionary.id, values));
+    try {
+      validate(this.props.dictionary.rows, values);
+      this.closeAddNewRowDialog();
+      this.props.dispatch(addTableRow(this.props.dictionary.id, values));
+    } catch (err) {
+      console.log(err);
+      this.setState({
+        error: err,
+      });
+    }
   };
 
   handleDeleteRows = () => {
@@ -73,6 +83,7 @@ class DictionaryManager extends React.Component {
         />
         <FormDialog
           title="Introduce name of the new dictionary"
+          error={this.state.error}
           open={this.state.addingNewRow}
           onClose={() => {
             this.setState({ addingNewRow: false })

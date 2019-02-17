@@ -43,14 +43,14 @@ function getSorting(order, orderBy) {
     : (a, b) => -desc(a, b, orderBy);
 }
 
-const styles = theme => ({
+const styles = {
   root: {
     width: '100%',
   },
   tableWrapper: {
     overflowX: 'auto',
   },
-});
+};
 
 class AdvancedTable extends React.Component {
   state = {
@@ -126,7 +126,7 @@ class AdvancedTable extends React.Component {
           .map((row, index) => (
             <TableRow
               hover
-              onClick={event => onSelectRow(event, index)}
+              onClick={event => onSelectRow(event, page * rowsPerPage + index)}
               role="checkbox"
               aria-checked={row.selected}
               tabIndex={-1}

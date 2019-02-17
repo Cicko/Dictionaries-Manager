@@ -5,7 +5,7 @@
  *
  */
 import React from 'react';
-import { noop } from 'lodash';
+import { noop, isEmpty } from 'lodash';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -40,6 +40,8 @@ class FormDialog extends React.Component {
   renderField = field => (
     <TextField
       autoFocus
+      error={!isEmpty(this.props.error[field.id])}
+      helperText={this.props.error[field.id]}
       margin="dense"
       id={field.id}
       label={field.label}
@@ -83,6 +85,7 @@ FormDialog.propTypes = {
   onClose: PropTypes.func,
   values: PropTypes.object,
   fields: PropTypes.array.isRequired,
+  error: PropTypes.object,
 };
 
 FormDialog.defaultProps = {
@@ -90,6 +93,7 @@ FormDialog.defaultProps = {
   onCreate: noop,
   onClose: noop,
   values: {},
+  error: {},
 };
 
 export default FormDialog;
