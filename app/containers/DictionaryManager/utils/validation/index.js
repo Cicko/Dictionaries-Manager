@@ -12,8 +12,8 @@ import { DUPLICATED, CHAIN, INCONSISTENT } from './messages';
 
 
 function validate(rows, newRow) {
-  if (!validateInconsistency(rows, newRow)) throw INCONSISTENT;
   if (!validateDuplication(rows, newRow)) throw DUPLICATED;
+  if (!validateInconsistency(rows, newRow)) throw INCONSISTENT;
   if (!validateChains(rows, newRow)) throw CHAIN;
   return true;
 }
