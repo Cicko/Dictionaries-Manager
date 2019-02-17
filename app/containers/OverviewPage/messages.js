@@ -13,4 +13,8 @@ export default defineMessages({
     id: `${scope}.header`,
     defaultMessage: 'Overview',
   },
+  dictionarySelectLabel: {
+    id: `${scope}.dictionarySelect`,
+    defaultMessage: 'Select dictionary',
+  },
 });

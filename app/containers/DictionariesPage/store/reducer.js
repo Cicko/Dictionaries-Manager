@@ -34,6 +34,7 @@ function dictionariesPageReducer(state = initialState, action) {
       return state.update('dictionaries', dictionaries =>
         dictionaries.push({
           id: dictionaries.size,
+          name: action.dictionary.name,
           rows: action.dictionary.rows.map(row => ({
             ...row,
             selected: false,

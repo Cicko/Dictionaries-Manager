@@ -30,14 +30,6 @@ function addExistingDictionary(dictionary) {
   };
 }
 
-function updateDictionary(id, rows) {
-  return {
-    type: UPDATE_DICTIONARY,
-    id,
-    rows,
-  }
-}
-
 function removeDictionary(id) {
   return {
     type: REMOVE_DICTIONARY,

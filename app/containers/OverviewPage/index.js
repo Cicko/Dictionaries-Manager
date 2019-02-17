@@ -13,8 +13,11 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import Grid from '@material-ui/core/Grid';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import { Table } from '../../components';
 import messages from './messages';
+import mockData from '../../data/mockOverviewData';
 
 const styles = {
   tableContainer: {
@@ -24,6 +27,40 @@ const styles = {
 
 /* eslint-disable react/prefer-stateless-function */
 class OverviewPage extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      currentDictionary: -1,
+    };
+  }
+
+  handleChange = e => {
+    this.setState({
+      currentDictionary: e.target.value,
+    });
+  };
+
+  renderSelectItem = dictionary => (
+    <MenuItem value={dictionary.id}> {dictionary.name} </MenuItem>
+  );
+
+  renderDictionarySelector = () => (
+    <Select
+      value={this.state.currentDictionary}
+      onChange={this.handleChange}
+      inputProps={{
+        name: 'name',
+        id: 'name',
+      }}
+    >
+      <MenuItem value="">
+        <em>None</em>
+      </MenuItem>
+      {this.props.dictionaries.map(this.renderSelectItem)}
+    </Select>
+  );
+
   render() {
     return (
       <Grid container>
@@ -38,8 +75,14 @@ class OverviewPage extends React.Component {
             <FormattedMessage {...messages.header} />
           </Typography>
           <Grid>
-            <Table />
+            <Table rows={mockData.rows} headers={mockData.headers}/>
           </Grid>
+        </Grid>
+        <Typography component="h5" variant="h5" gutterBottom>
+          <FormattedMessage {...messages.dictionarySelectLabel} />
+        </Typography>
+        <Grid container sm={4} justify="center">
+          {this.renderDictionarySelector()}
         </Grid>
       </Grid>
     );
@@ -49,11 +92,13 @@ class OverviewPage extends React.Component {
 OverviewPage.propTypes = {
   drawerOpen: PropTypes.bool,
   classes: PropTypes.object.isRequired,
-}
+  dictionaries: PropTypes.object,
+};
 
 export default compose(
   connect(state => ({
     drawerOpen: state.getIn(['generic', 'navDrawer', 'open']),
+    dictionaries: state.getIn(['dictionaries', 'dictionaries']),
   })),
   withStyles(styles),
 )(OverviewPage);
