@@ -7,6 +7,7 @@ import { fromJS } from 'immutable';
 import { combineReducers } from 'redux-immutable';
 import { connectRouter, routerMiddleware} from 'connected-react-router/immutable';
 import createSagaMiddleware from 'redux-saga';
+import { save, load } from 'redux-localstorage-simple';
 import reducers from './reducers';
 import historyUtil from './utils/history';
 
@@ -27,7 +28,11 @@ export default function configureStore(initialState = {}, history) {
   // Create the store with two middlewares
   // 1. sagaMiddleware: Makes redux-sagas work
   // 2. routerMiddleware: Syncs the location/URL path to the state
-  const middlewares = [sagaMiddleware, routerMiddleware(history)];
+  const middlewares = [
+    sagaMiddleware,
+    routerMiddleware(history),
+    save(),
+  ];
 
   const enhancers = [applyMiddleware(...middlewares)];
 
@@ -40,10 +45,18 @@ export default function configureStore(initialState = {}, history) {
       ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
       : compose;
   /* eslint-enable */
+  const immutableLoadedState = fromJS({
+    ...load(),
+  });
+
+  // TODO: Fix structure of the state.
+  console.log(load().dictionaries);
+  immutableLoadedState.set('dictionaries', load().dictionaries);
+  console.log(immutableLoadedState.get('dictionaries'));
 
   const store = createStore(
     createReducer(),
-    fromJS(initialState),
+    immutableLoadedState,
     composeEnhancers(...enhancers),
   );
 

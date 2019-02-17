@@ -9,6 +9,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
+import { Map } from 'immutable';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -124,7 +125,7 @@ DictionariesPage.propTypes = {
 
 export default compose(
   connect((state) => ({
-    dictionaries: state.getIn(['dictionaries', 'dictionaries']).toArray(),
+    dictionaries: state.getIn(['dictionaries', 'dictionaries']).toJS(),
   })),
   withStyles(styles),
 )(DictionariesPage);

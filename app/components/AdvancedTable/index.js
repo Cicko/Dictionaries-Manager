@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import noop from 'lodash/noop';
+import { noop, isArray } from 'lodash';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -71,35 +71,6 @@ class AdvancedTable extends React.Component {
     this.setState({ order, orderBy });
   };
 
-  handleSelectAllClick = event => {
-    if (event.target.checked) {
-      this.setState(state => ({ selected: state.data.map(n => n.id) }));
-      return;
-    }
-    this.setState({ selected: [] });
-  };
-
-  handleClick = (event, id) => {
-    const { selected } = this.state;
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-    }
-
-    this.setState({ selected: newSelected });
-  };
-
   handleChangePage = (event, page) => {
     this.setState({ page });
   };
@@ -108,7 +79,12 @@ class AdvancedTable extends React.Component {
     this.setState({ rowsPerPage: event.target.value });
   };
 
-  numberOfSelected = () => this.props.rows.filter(row => row.selected).length;
+  numberOfSelected = () => {
+    if (isArray(this.props.rows)) {
+      return this.props.rows.filter(row => row.selected).length;
+    }
+    return 0;
+  };
 
   /**
    * Render the body of the Table
@@ -170,7 +146,6 @@ class AdvancedTable extends React.Component {
               numSelected={numberOfSelected}
               order={order}
               orderBy={orderBy}
-              onSelectAllClick={this.handleSelectAllClick}
               onRequestSort={this.handleRequestSort}
               rowCount={rows.length}
             />
@@ -199,7 +174,7 @@ class AdvancedTable extends React.Component {
 
 AdvancedTable.propTypes = {
   classes: PropTypes.object.isRequired,
-  rows: PropTypes.array.isRequired,
+  rows: PropTypes.array,
   onDeleteRows: PropTypes.func,
   onSelectRow: PropTypes.func,
   title: PropTypes.string,
@@ -211,6 +186,7 @@ AdvancedTable.defaultProps = {
   onDeleteRows: noop,
   onSelectRow: noop,
   title: 'Default title',
+  rows: [],
 };
 
 export default withStyles(styles)(AdvancedTable);

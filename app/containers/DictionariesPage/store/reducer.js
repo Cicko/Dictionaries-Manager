@@ -78,18 +78,20 @@ function dictionariesPageReducer(state = initialState, action) {
       );
     case SELECT_ROW:
       return state.update('dictionaries', dictionaries =>
-        dictionaries.update(action.tableId, dictionary => ({
-          ...dictionary,
-          rows: dictionary.rows.map(
-            (row, index) =>
-              index === action.rowIndex
-                ? ({
-                  ...row,
-                  selected: !row.selected,
-                })
-                : row,
-          ),
-        })),
+        dictionaries.update(action.tableId, dictionary => {
+          return {
+            ...dictionary,
+            rows: dictionary.rows.map(
+              (row, index) =>
+                index === action.rowIndex
+                  ? ({
+                    ...row,
+                    selected: !row.selected,
+                  })
+                  : row,
+            ),
+          };
+        }),
       );
     case REMOVE_ROW:
       return state.update('dictionaries', dictionaries =>
