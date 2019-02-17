@@ -23,6 +23,9 @@ const styles = {
   tableContainer: {
     padding: 100,
   },
+  selectContainer: {
+    marginTop: 40,
+  },
 };
 
 /* eslint-disable react/prefer-stateless-function */
@@ -77,12 +80,14 @@ class OverviewPage extends React.Component {
           <Grid>
             <Table rows={mockData.rows} headers={mockData.headers}/>
           </Grid>
-        </Grid>
-        <Typography component="h5" variant="h5" gutterBottom>
-          <FormattedMessage {...messages.dictionarySelectLabel} />
-        </Typography>
-        <Grid container sm={4} justify="center">
-          {this.renderDictionarySelector()}
+          <Grid justify="center" className={this.props.classes.selectContainer}>
+            <Typography component="h5" variant="h5" gutterBottom>
+              <FormattedMessage {...messages.dictionarySelectLabel} />
+            </Typography>
+            <Grid container sm={4} justify="center">
+              {this.renderDictionarySelector()}
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     );

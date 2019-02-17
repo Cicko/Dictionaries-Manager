@@ -38,4 +38,4 @@ export default {
       price: 'CHF 272',
     },
   ],
-}
+};

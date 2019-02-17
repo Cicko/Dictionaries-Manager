@@ -44,7 +44,9 @@ export class DictionariesPage extends React.Component {
     this.state = {
       creatingNewTable: false,
     };
-    props.dispatch(addExistingDictionary(dictionaryOne));
+    if (props.dictionaries.length === 0) {
+      props.dispatch(addExistingDictionary(dictionaryOne));
+    }
   }
 
   createNewDictionary = ({ name }) => {
