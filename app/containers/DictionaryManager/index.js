@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { withStyles } from '@material-ui/core/styles';
 import { AdvancedTable } from '../../components';
-import { addTableRow, removeTableRow, selectTableRow } from '../DictionariesPage/store/actions';
+import { addTableRow, removeTableRow, selectTableRow, removeDictionary } from '../DictionariesPage/store/actions';
 import FormDialog from '../../components/FormDialog';
 import validate from './utils/validation';
 
@@ -61,8 +61,14 @@ class DictionaryManager extends React.Component {
   };
 
   handleDeleteRows = () => {
-    this.props.dispatch(removeTableRow(this.props.dictionary.id));
+    if (this.numSelected() > 0) {
+      this.props.dispatch(removeTableRow(this.props.dictionary.id));
+    } else {
+      this.props.dispatch(removeDictionary(this.props.dictionary.id));
+    }
   };
+
+  numSelected = () => this.props.dictionary.rows.filter(row => row.selected).length;
 
   closeAddNewRowDialog = () => {
     this.setState({

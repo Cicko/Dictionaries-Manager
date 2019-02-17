@@ -30,6 +30,7 @@ const toolbarStyles = theme => ({
     flex: '1 1 100%',
   },
   actions: {
+    display: 'flex',
     color: theme.palette.text.secondary,
   },
   title: {
@@ -58,13 +59,11 @@ const AdvancedTableToolbar = props => {
       </div>
       <div className={classes.spacer} />
       <div className={classes.actions}>
-        {numSelected > 0 && (
-          <Tooltip title="Delete">
-            <IconButton aria-label="Delete" onClick={onDeleteRows}>
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
-        )}
+        <Tooltip title={numSelected > 0 ? 'Delete row' : 'Delete table'}>
+          <IconButton aria-label={numSelected > 0 ? 'Delete row' : 'Delete table'} onClick={onDeleteRows}>
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
         {numSelected === 0 && (
           <Tooltip title="Add row">
             <IconButton aria-label="Add row" onClick={onAddRow}>
