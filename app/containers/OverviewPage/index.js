@@ -75,6 +75,9 @@ class OverviewPage extends React.Component {
     <Select
       value={this.state.currentDictionary}
       onChange={this.handleChange}
+      fullWidth
+      displayEmpty
+      name="Select dictionary"
       inputProps={{
         name: 'name',
         id: 'name',
@@ -102,12 +105,10 @@ class OverviewPage extends React.Component {
           </Typography>
           <Grid>
             <Table rows={this.state.rows} headers={this.state.headers}/>
-          </Grid>
-          <Grid justify="center" className={this.props.classes.selectContainer}>
-            <Typography component="h5" variant="h5" gutterBottom>
-              <FormattedMessage {...messages.dictionarySelectLabel} />
-            </Typography>
-            <Grid container sm={4} justify="center">
+            <Grid justify="center" className={this.props.classes.selectContainer}>
+              <Typography variant="h6" guttenBottom>
+                <FormattedMessage {...messages.dictionarySelectLabel} />
+              </Typography>
               {this.renderDictionarySelector()}
             </Grid>
           </Grid>
