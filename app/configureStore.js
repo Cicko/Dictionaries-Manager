@@ -31,7 +31,7 @@ export default function configureStore(initialState = {}, history) {
   const middlewares = [
     sagaMiddleware,
     routerMiddleware(history),
-    save(),
+    // save(),
   ];
 
   const enhancers = [applyMiddleware(...middlewares)];
@@ -56,7 +56,7 @@ export default function configureStore(initialState = {}, history) {
 
   const store = createStore(
     createReducer(),
-    immutableLoadedState,
+    fromJS(initialState),
     composeEnhancers(...enhancers),
   );
 
