@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop, isArray } from 'lodash';
+import { noop, isArray, has } from 'lodash';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -50,6 +50,9 @@ const styles = {
   tableWrapper: {
     overflowX: 'auto',
   },
+  cellError: {
+    color: 'salmon',
+  },
 };
 
 class AdvancedTable extends React.Component {
@@ -91,7 +94,7 @@ class AdvancedTable extends React.Component {
    * @returns {*}
    */
   renderTableBody = () => {
-    const { onSelectRow, rows } = this.props;
+    const { onSelectRow, rows, classes } = this.props;
     const { order, orderBy, rowsPerPage, page } = this.state;
     const emptyRows =
       rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
@@ -101,7 +104,7 @@ class AdvancedTable extends React.Component {
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
           .map((row, index) => (
             <TableRow
-              hover
+              className={row.error ? classes.tableBodyRow : ''}
               onClick={event => onSelectRow(event, page * rowsPerPage + index)}
               role="checkbox"
               aria-checked={row.selected}
@@ -112,10 +115,17 @@ class AdvancedTable extends React.Component {
               <TableCell padding="checkbox">
                 <Checkbox checked={row.selected} />
               </TableCell>
-              <TableCell component="th" scope="row" padding="none">
+              <TableCell
+                component="th"
+                scope="row"
+                padding="none"
+                className={has(row, 'error.domain') ? classes.cellError : ''}>
                 {row.domain}
               </TableCell>
-              <TableCell>{row.range}</TableCell>
+              <TableCell
+                className={has(row, 'error.range') ? classes.cellError : ''}>
+              {row.range}
+              </TableCell>
             </TableRow>
           ))}
         {emptyRows > 0 && (
