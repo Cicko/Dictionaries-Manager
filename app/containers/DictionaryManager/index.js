@@ -12,9 +12,13 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { withStyles } from '@material-ui/core/styles';
 import { AdvancedTable } from '../../components';
-import { addTableRow, removeTableRow, selectTableRow, removeDictionary } from '../DictionariesPage/store/actions';
+import {
+  addTableRow,
+  removeTableRow,
+  selectTableRow,
+  removeDictionary,
+} from '../DictionariesPage/store/actions';
 import Dialog from '../../components/Dialog';
-import validate from './utils/validation';
 
 const styles = {
   container: {
@@ -49,16 +53,8 @@ class DictionaryManager extends React.Component {
   };
 
   addingNewRow = values => {
-    try {
-      validate(this.props.dictionary.rows, values);
-      this.closeAddNewRowDialog();
-      this.props.dispatch(addTableRow(this.props.dictionary.id, values));
-    } catch (err) {
-      console.log(err);
-      this.setState({
-        error: err,
-      });
-    }
+    this.closeAddNewRowDialog();
+    this.props.dispatch(addTableRow(this.props.dictionary.id, values));
   };
 
   handleDeleteRows = () => {
@@ -78,7 +74,8 @@ class DictionaryManager extends React.Component {
     this.props.dispatch(removeDictionary(this.props.dictionary.id));
   };
 
-  numSelected = () => this.props.dictionary.rows.filter(row => row.selected).length;
+  numSelected = () =>
+    this.props.dictionary.rows.filter(row => row.selected).length;
 
   closeAddNewRowDialog = () => {
     this.setState({
