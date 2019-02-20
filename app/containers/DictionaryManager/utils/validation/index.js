@@ -15,6 +15,7 @@ function validate(rows, newRow) {
   if (!validateDuplication(rows, newRow)) return DUPLICATED;
   if (!validateInconsistency(rows, newRow)) return INCONSISTENT;
   if (!validateChains(rows, newRow)) return CHAIN;
+  // Cycles are a created by chains. We don't need another method for that.
   return true;
 }
 

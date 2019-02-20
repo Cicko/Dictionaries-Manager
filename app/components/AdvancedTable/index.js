@@ -50,7 +50,10 @@ const styles = {
   tableWrapper: {
     overflowX: 'auto',
   },
-  cellError: {
+  cellErrorMedium: {
+    color: 'orange',
+  },
+  cellErrorImportant: {
     color: 'salmon',
   },
 };
@@ -89,12 +92,18 @@ class AdvancedTable extends React.Component {
     return 0;
   };
 
+  getClassNameForColumn = (row, field) => {
+    if (!has(row, `error.${field}`)) return '';
+    const errorClass = this.props.classes[`cellError${row.error.importance}`];
+    return errorClass;
+  };
+
   /**
    * Render the body of the Table
    * @returns {*}
    */
   renderTableBody = () => {
-    const { onSelectRow, rows, classes } = this.props;
+    const { onSelectRow, rows } = this.props;
     const { order, orderBy, rowsPerPage, page } = this.state;
     const emptyRows =
       rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
@@ -104,7 +113,6 @@ class AdvancedTable extends React.Component {
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
           .map((row, index) => (
             <TableRow
-              className={row.error ? classes.tableBodyRow : ''}
               onClick={event => onSelectRow(event, page * rowsPerPage + index)}
               role="checkbox"
               aria-checked={row.selected}
@@ -119,11 +127,13 @@ class AdvancedTable extends React.Component {
                 component="th"
                 scope="row"
                 padding="none"
-                className={has(row, 'error.domain') ? classes.cellError : ''}>
+                className={this.getClassNameForColumn(row, 'domain')}
+              >
                 {row.domain}
               </TableCell>
               <TableCell
-                className={has(row, 'error.range') ? classes.cellError : ''}>
+                className={this.getClassNameForColumn(row, 'range')}
+              >
               {row.range}
               </TableCell>
             </TableRow>
