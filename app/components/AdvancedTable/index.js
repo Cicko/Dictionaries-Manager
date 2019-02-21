@@ -119,7 +119,6 @@ class AdvancedTable extends React.Component {
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
           .map((row, index) => (
             <TableRow
-              hover
               onClick={event => onSelectRow(event, page * rowsPerPage + index)}
               role="checkbox"
               aria-checked={row.selected}

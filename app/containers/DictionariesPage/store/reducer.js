@@ -5,6 +5,7 @@
  */
 
 import { fromJS, List } from 'immutable';
+import { isEmpty } from 'lodash';
 import {
   ADD_DICTIONARY,
   ADD_EXISTING_DICTIONARY,
@@ -15,6 +16,7 @@ import {
   SET_NAME,
   SET_ROW,
 } from './constants';
+import validate from '../../DictionaryManager/utils/validation';
 
 export const initialState = fromJS({
   dictionaries: List(),
@@ -55,6 +57,7 @@ function dictionariesPageReducer(state = initialState, action) {
               ...action.row,
               id: dictionary.rows.length,
               selected: false,
+              error: validate(dictionary.rows, action.row),
             },
           ],
         })),
