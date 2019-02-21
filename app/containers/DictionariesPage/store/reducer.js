@@ -47,18 +47,17 @@ function dictionariesPageReducer(state = initialState, action) {
       );
     case ADD_ROW:
       return state.update('dictionaries', dictionaries =>
-        dictionaries.update(action.tableId, dictionary => ({
-          ...dictionary,
-          rows: [
-            ...dictionary.rows,
-            {
+        dictionaries.update(action.tableId, dictionary =>
+          dictionary.update('rows', rows => {
+            rows.push({
               ...action.row,
-              id: dictionary.rows.length,
+              id: rows.length,
               selected: false,
-              error: validate(dictionary.rows, action.row),
-            },
-          ],
-        })),
+              error: validate(rows, action.row),
+            });
+            return rows;
+          }),
+        ),
       );
     case SET_NAME:
       return state.update('dictionaries', dictionaries =>
@@ -81,44 +80,22 @@ function dictionariesPageReducer(state = initialState, action) {
       return state.update('dictionaries', dictionaries =>
         dictionaries.update(
           action.tableId,
-          dictionary =>
-            dictionary.update('rows', rows =>
-              rows.map((row, index) => ({
-                ...row,
-                selected:
-                  action.rowIndex === index ? !row.selected : row.selected,
-              })),
-            ),
-          /*
-            console.log(dictionary);
-            console.log(rows);
-            List(rows).update(action.rowIndex, row => {
-              row.set('selected', selected => !selected);
-            });
-          });
-          */
-          /*
-          return {
-            ...dictionary,
-            rows: dictionary.rows.map(
-              (row, index) =>
-                index === action.rowIndex
-                  ? ({
-                    ...row,
-                    selected: !row.selected,
-                  })
-                  : row,
-            ),
-          };
-          */
+          dictionary => dictionary.update('rows', rows =>
+            rows.map((row, index) => ({
+              ...row,
+              selected:
+                action.rowIndex === index ? !row.selected : row.selected,
+            })),
+          ),
         ),
       );
     case REMOVE_ROW:
       return state.update('dictionaries', dictionaries =>
-        dictionaries.update(action.tableId, dictionary => ({
-          ...dictionary,
-          rows: dictionary.rows.filter(row => !row.selected),
-        })),
+        dictionaries.update(action.tableId, dictionary =>
+          dictionary.update('rows', rows =>
+            rows.filter((row) => !row.selected)
+          ),
+        ),
       );
     default:
       return state;
