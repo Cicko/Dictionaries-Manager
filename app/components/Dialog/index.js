@@ -69,7 +69,7 @@ class CustomDialog extends React.Component {
               Cancel
             </Button>
             <Button onClick={this.submitNewTable} color="primary">
-              Create
+              Accept
             </Button>
           </DialogActions>
         </Dialog>

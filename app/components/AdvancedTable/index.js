@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop, isArray, has } from 'lodash';
+import { noop, isArray, has, upperFirst } from 'lodash';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -15,6 +15,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
+import { ToastContainer, toast } from 'react-toastify';
 import { AdvancedTableToolbar, AdvancedTableHead } from './components';
 
 function desc(a, b, orderBy) {
@@ -100,6 +101,12 @@ class AdvancedTable extends React.Component {
 
   getClassNameForCell = (row, field) => {
     if (!has(row, `error.${field}`)) return '';
+    const { importance } = row.error;
+    const toastMethod = importance === 'Important'
+      ? toast.error
+      : toast.warn;
+    toastMethod(`${upperFirst(field)} ${row[field]}. ${row.error[field]}`);
+
     return this.props.classes[`cellError${row.error.importance}`];
   };
 
@@ -195,6 +202,7 @@ class AdvancedTable extends React.Component {
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
         />
+        <ToastContainer />
       </Paper>
     );
   }

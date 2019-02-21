@@ -9,7 +9,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import { Map } from 'immutable';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -17,6 +16,7 @@ import { FormattedMessage } from 'react-intl';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Tooltip from '@material-ui/core/Tooltip';
+import { toast, ToastContainer } from 'react-toastify';
 import messages from './messages';
 import DictionaryManager from '../DictionaryManager';
 import mockDictionary from '../../data/mockDictionaryOne';
@@ -52,6 +52,7 @@ export class DictionariesPage extends React.Component {
   createNewDictionary = ({ name }) => {
     this.closeDialogForNewDictionary();
     this.props.dispatch(addDictionary(name));
+    toast.info('New dictionary was created', { position: toast.POSITION.TOP_RIGHT });
   };
 
   openDialogForNewDictionary = () => {
@@ -112,6 +113,7 @@ export class DictionariesPage extends React.Component {
             },
           ]}
         />
+        <ToastContainer />
       </Grid>
     );
   }
