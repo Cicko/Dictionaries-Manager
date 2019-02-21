@@ -40,7 +40,6 @@ const styles = (theme) => ({
 
 /* eslint-disable react/prefer-stateless-function */
 export class DictionariesPage extends React.Component {
-
   static intlScope = 'app.containers.DictionariesPage';
 
   constructor(props) {

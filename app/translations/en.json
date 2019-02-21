@@ -1,5 +1,5 @@
 {
   "app.containers.HomePage.header": "You greatest dictionary",
   "app.containers.DictionariesPage.tableError": "Dictionary {name} contains error at row {errorIndex}",
-  "app.containers.DictionariesPage.tableWarning": "Dictionary {name} contains error at row {warningIndex}"
+  "app.containers.DictionariesPage.tableWarning": "Dictionary {name} contains warning at row {warningIndex}"
 }
