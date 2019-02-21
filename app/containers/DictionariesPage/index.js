@@ -9,6 +9,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
+import { has } from 'lodash';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -48,6 +49,24 @@ export class DictionariesPage extends React.Component {
       props.dispatch(addExistingDictionary(mockDictionary));
     }
   }
+
+  componentDidMount() {
+    this.checkForErrors();
+  }
+
+  checkForErrors = () => {
+    this.props.dictionaries.forEach(dictionary => {
+      let dictionaryHasError = false;
+      let errorIndex = -1;
+      dictionary.rows.forEach((row, index) => {
+        if (has(row, 'error') && !dictionaryHasError) {
+          dictionaryHasError = true;
+          errorIndex = index;
+        }
+      });
+      toast.error(`Dictionary ${dictionary.name} contains error at row ${errorIndex}`);
+    });
+  };
 
   createNewDictionary = ({ name }) => {
     this.closeDialogForNewDictionary();
