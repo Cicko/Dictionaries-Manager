@@ -50,6 +50,21 @@ const styles = {
   tableWrapper: {
     overflowX: 'auto',
   },
+<<<<<<< Updated upstream
+=======
+  rowErrorMedium: {
+    backgroundColor: '#FFECB3',
+  },
+  rowErrorImportant: {
+    backgroundColor: '#FFCDD2',
+  },
+  cellErrorMedium: {
+    color: '#FFC107',
+  },
+  cellErrorImportant: {
+    color: '#F44336',
+  },
+>>>>>>> Stashed changes
 };
 
 class AdvancedTable extends React.Component {
@@ -86,6 +101,16 @@ class AdvancedTable extends React.Component {
     return 0;
   };
 
+<<<<<<< Updated upstream
+=======
+  getClassNameForCell = (row, field) => {
+    if (!has(row, `error.${field}`)) return '';
+    return this.props.classes[`cellError${row.error.importance}`];
+  };
+
+  getClassNameForRow = row => has(row, 'error') ? this.props.classes[`rowError${row.error.importance}`] : '';
+
+>>>>>>> Stashed changes
   /**
    * Render the body of the Table
    * @returns {*}
@@ -105,6 +130,7 @@ class AdvancedTable extends React.Component {
               onClick={event => onSelectRow(event, page * rowsPerPage + index)}
               role="checkbox"
               aria-checked={row.selected}
+              className={this.getClassNameForRow(row)}
               tabIndex={-1}
               key={row.id}
               selected={row.selected}
@@ -112,10 +138,26 @@ class AdvancedTable extends React.Component {
               <TableCell padding="checkbox">
                 <Checkbox checked={row.selected} />
               </TableCell>
+<<<<<<< Updated upstream
               <TableCell component="th" scope="row" padding="none">
                 {row.domain}
               </TableCell>
               <TableCell>{row.range}</TableCell>
+=======
+              <TableCell
+                component="th"
+                scope="row"
+                padding="none"
+                className={this.getClassNameForCell(row, 'domain')}
+              >
+                {row.domain}
+              </TableCell>
+              <TableCell
+                className={this.getClassNameForCell(row, 'range')}
+              >
+              {row.range}
+              </TableCell>
+>>>>>>> Stashed changes
             </TableRow>
           ))}
         {emptyRows > 0 && (
