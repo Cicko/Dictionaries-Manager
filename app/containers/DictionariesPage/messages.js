@@ -13,4 +13,11 @@ export default defineMessages({
     id: `${scope}.header`,
     defaultMessage: 'Available Dictionaries',
   },
+  tableError: {
+    id: `${scope}.tableError`,
+    defaultMessage: 'Error mi niño joder',
+  },
+  warningError: {
+    id: `${scope}.tableWarning`,
+  },
 });

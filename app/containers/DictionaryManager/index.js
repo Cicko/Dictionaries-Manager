@@ -9,6 +9,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
 import { compose } from 'recompose';
 import { withStyles } from '@material-ui/core/styles';
 import { AdvancedTable } from '../../components';
@@ -60,6 +61,7 @@ class DictionaryManager extends React.Component {
   handleDeleteRows = () => {
     if (this.numSelected() > 0) {
       this.props.dispatch(removeTableRow(this.props.dictionary.id));
+      toast.info('Row was deleted');
     } else {
       this.setState({
         deletingDictionary: true,
@@ -72,6 +74,9 @@ class DictionaryManager extends React.Component {
       deletingDictionary: false,
     });
     this.props.dispatch(removeDictionary(this.props.dictionary.id));
+    toast.info('Table '
+      .concat(this.props.dictionary.name)
+      .concat(' was deleted'));
   };
 
   numSelected = () =>
@@ -123,6 +128,7 @@ class DictionaryManager extends React.Component {
           title="Are you sure you want do delete this dictionary?"
           onCreate={this.deleteDictionary}
         />
+        <ToastContainer />
       </Grid>
     );
   }

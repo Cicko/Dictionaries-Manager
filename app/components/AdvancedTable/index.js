@@ -104,6 +104,7 @@ class AdvancedTable extends React.Component {
   };
 
   getClassNameForRow = row => has(row, 'error') ? this.props.classes[`rowError${row.error.importance}`] : '';
+
   /**
    * Render the body of the Table
    * @returns {*}
