@@ -90,6 +90,7 @@ class DictionaryManager extends React.Component {
 
   render() {
     const { classes, dictionary } = this.props;
+    console.log(dictionary);
     return (
       <Grid md={5} lg={3} className={classes.container}>
         <AdvancedTable

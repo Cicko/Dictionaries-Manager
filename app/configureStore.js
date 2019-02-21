@@ -31,7 +31,7 @@ export default function configureStore(initialState = {}, history) {
   const middlewares = [
     sagaMiddleware,
     routerMiddleware(history),
-    // save(),
+    save(),
   ];
 
   const enhancers = [applyMiddleware(...middlewares)];
@@ -50,7 +50,7 @@ export default function configureStore(initialState = {}, history) {
   });
 
   // TODO: Fix structure of the state.
-  console.log(load().dictionaries);
+  console.log(load());
   immutableLoadedState.set('dictionaries', load().dictionaries);
   console.log(immutableLoadedState.get('dictionaries'));
 

@@ -4,7 +4,7 @@
  *
  */
 
-import { fromJS, List } from 'immutable';
+import { fromJS, List, Map, } from 'immutable';
 import { isEmpty } from 'lodash';
 import {
   ADD_DICTIONARY,
@@ -25,24 +25,22 @@ export const initialState = fromJS({
 function dictionariesPageReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_DICTIONARY:
-      return state.update('dictionaries', dictionaries =>
-        dictionaries.push({
+      return state.update('dictionaries', dictionaries => {
+        const dict = Map({
           id: dictionaries.size,
           name: action.name,
           rows: [],
-        }),
-      );
+        });
+        return dictionaries.push(dict);
+      });
     case ADD_EXISTING_DICTIONARY: // Add dictionary with prefilled data.
-      return state.update('dictionaries', dictionaries =>
-        dictionaries.push({
+      return state.updateIn(['dictionaries'], dictionaries => {
+        const dict = Map({
           id: dictionaries.size,
-          name: action.dictionary.name,
-          rows: action.dictionary.rows.map(row => ({
-            ...row,
-            selected: false,
-          })),
-        }),
-      );
+          ...action.dictionary.toJS(),
+        });
+        return dictionaries.push(dict);
+      });
     case REMOVE_DICTIONARY:
       return state.updateIn(['dictionaries'], dictionaries =>
         dictionaries.delete(action.id),
@@ -81,7 +79,25 @@ function dictionariesPageReducer(state = initialState, action) {
       );
     case SELECT_ROW:
       return state.update('dictionaries', dictionaries =>
-        dictionaries.update(action.tableId, dictionary => {
+        dictionaries.update(
+          action.tableId,
+          dictionary =>
+            dictionary.update('rows', rows =>
+              rows.map((row, index) => ({
+                ...row,
+                selected:
+                  action.rowIndex === index ? !row.selected : row.selected,
+              })),
+            ),
+          /*
+            console.log(dictionary);
+            console.log(rows);
+            List(rows).update(action.rowIndex, row => {
+              row.set('selected', selected => !selected);
+            });
+          });
+          */
+          /*
           return {
             ...dictionary,
             rows: dictionary.rows.map(
@@ -94,7 +110,8 @@ function dictionariesPageReducer(state = initialState, action) {
                   : row,
             ),
           };
-        }),
+          */
+        ),
       );
     case REMOVE_ROW:
       return state.update('dictionaries', dictionaries =>

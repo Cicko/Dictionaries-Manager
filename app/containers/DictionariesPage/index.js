@@ -53,7 +53,9 @@ export class DictionariesPage extends React.Component {
   }
 
   componentDidMount() {
-    this.toastErrors();
+    if (this.props.dictionaries) {
+      this.toastErrors();
+    }
   }
 
   toastErrors = () => {
@@ -117,6 +119,7 @@ export class DictionariesPage extends React.Component {
 
   render() {
     const { classes, dictionaries } = this.props;
+    console.log(dictionaries);
     return (
       <Grid container>
         <Grid
@@ -168,7 +171,7 @@ DictionariesPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
   dictionaries: PropTypes.array,
-  intl: intlShape.isrequired,
+  intl: intlShape.isRequired,
 };
 
 export default compose(
