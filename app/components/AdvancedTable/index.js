@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop, isArray } from 'lodash';
+import { noop, isArray, has } from 'lodash';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -50,8 +50,6 @@ const styles = {
   tableWrapper: {
     overflowX: 'auto',
   },
-<<<<<<< Updated upstream
-=======
   rowErrorMedium: {
     backgroundColor: '#FFECB3',
   },
@@ -64,7 +62,6 @@ const styles = {
   cellErrorImportant: {
     color: '#F44336',
   },
->>>>>>> Stashed changes
 };
 
 class AdvancedTable extends React.Component {
@@ -101,16 +98,12 @@ class AdvancedTable extends React.Component {
     return 0;
   };
 
-<<<<<<< Updated upstream
-=======
   getClassNameForCell = (row, field) => {
     if (!has(row, `error.${field}`)) return '';
     return this.props.classes[`cellError${row.error.importance}`];
   };
 
   getClassNameForRow = row => has(row, 'error') ? this.props.classes[`rowError${row.error.importance}`] : '';
-
->>>>>>> Stashed changes
   /**
    * Render the body of the Table
    * @returns {*}
@@ -138,12 +131,6 @@ class AdvancedTable extends React.Component {
               <TableCell padding="checkbox">
                 <Checkbox checked={row.selected} />
               </TableCell>
-<<<<<<< Updated upstream
-              <TableCell component="th" scope="row" padding="none">
-                {row.domain}
-              </TableCell>
-              <TableCell>{row.range}</TableCell>
-=======
               <TableCell
                 component="th"
                 scope="row"
@@ -157,7 +144,6 @@ class AdvancedTable extends React.Component {
               >
               {row.range}
               </TableCell>
->>>>>>> Stashed changes
             </TableRow>
           ))}
         {emptyRows > 0 && (
