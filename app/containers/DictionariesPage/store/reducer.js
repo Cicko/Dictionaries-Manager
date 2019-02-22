@@ -80,20 +80,30 @@ function dictionariesPageReducer(state = initialState, action) {
       return state.update('dictionaries', dictionaries =>
         dictionaries.update(
           action.tableId,
-          dictionary => dictionary.update('rows', rows =>
-            rows.map((row, index) => ({
+          dictionary => dictionary.update('rows', rows => {
+            if (List.isList(rows)) {
+              return rows.update(action.rowIndex, row =>
+                row.update('selected', selected => !selected),
+              );
+            }
+            return rows.map((row, index) => ({
               ...row,
               selected:
                 action.rowIndex === index ? !row.selected : row.selected,
-            })),
-          ),
+            }));
+          }),
         ),
       );
     case REMOVE_ROW:
       return state.update('dictionaries', dictionaries =>
         dictionaries.update(action.tableId, dictionary =>
-          dictionary.update('rows', rows =>
-            rows.filter((row) => !row.selected)
+          dictionary.update('rows', rows => {
+              if (List.isList(rows)) {
+                return rows.filter((row) => !row.selected)
+              } else {
+                return rows.filter((row) => !row.selected);
+              }
+            }
           ),
         ),
       );

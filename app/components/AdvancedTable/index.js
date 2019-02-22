@@ -114,6 +114,7 @@ class AdvancedTable extends React.Component {
     const { order, orderBy, rowsPerPage, page } = this.state;
     const emptyRows =
       rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+    console.log(rows);
     return (
       <TableBody>
         {stableSort(rows, getSorting(order, orderBy))

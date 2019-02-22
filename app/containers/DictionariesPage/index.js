@@ -119,7 +119,6 @@ export class DictionariesPage extends React.Component {
 
   render() {
     const { classes, dictionaries } = this.props;
-    console.log(dictionaries);
     return (
       <Grid container>
         <Grid
