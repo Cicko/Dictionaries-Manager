@@ -4,7 +4,7 @@
  *
  */
 
-import { fromJS, List } from 'immutable';
+import { fromJS, List, Map, } from 'immutable';
 import { isEmpty } from 'lodash';
 import {
   ADD_DICTIONARY,
@@ -25,42 +25,39 @@ export const initialState = fromJS({
 function dictionariesPageReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_DICTIONARY:
-      return state.update('dictionaries', dictionaries =>
-        dictionaries.push({
+      return state.update('dictionaries', dictionaries => {
+        const dict = Map({
           id: dictionaries.size,
           name: action.name,
           rows: [],
-        }),
-      );
+        });
+        return dictionaries.push(dict);
+      });
     case ADD_EXISTING_DICTIONARY: // Add dictionary with prefilled data.
-      return state.update('dictionaries', dictionaries =>
-        dictionaries.push({
+      return state.updateIn(['dictionaries'], dictionaries => {
+        const dict = Map({
           id: dictionaries.size,
-          name: action.dictionary.name,
-          rows: action.dictionary.rows.map(row => ({
-            ...row,
-            selected: false,
-          })),
-        }),
-      );
+          ...action.dictionary.toJS(),
+        });
+        return dictionaries.push(dict);
+      });
     case REMOVE_DICTIONARY:
       return state.updateIn(['dictionaries'], dictionaries =>
         dictionaries.delete(action.id),
       );
     case ADD_ROW:
       return state.update('dictionaries', dictionaries =>
-        dictionaries.update(action.tableId, dictionary => ({
-          ...dictionary,
-          rows: [
-            ...dictionary.rows,
-            {
+        dictionaries.update(action.tableId, dictionary =>
+          dictionary.update('rows', rows => {
+            rows.push({
               ...action.row,
-              id: dictionary.rows.length,
+              id: rows.length,
               selected: false,
-              error: validate(dictionary.rows, action.row),
-            },
-          ],
-        })),
+              error: validate(rows, action.row),
+            });
+            return rows;
+          }),
+        ),
       );
     case SET_NAME:
       return state.update('dictionaries', dictionaries =>
@@ -81,27 +78,34 @@ function dictionariesPageReducer(state = initialState, action) {
       );
     case SELECT_ROW:
       return state.update('dictionaries', dictionaries =>
-        dictionaries.update(action.tableId, dictionary => {
-          return {
-            ...dictionary,
-            rows: dictionary.rows.map(
-              (row, index) =>
-                index === action.rowIndex
-                  ? ({
-                    ...row,
-                    selected: !row.selected,
-                  })
-                  : row,
-            ),
-          };
-        }),
+        dictionaries.update(
+          action.tableId,
+          dictionary => dictionary.update('rows', rows => {
+            if (List.isList(rows)) {
+              return rows.update(action.rowIndex, row =>
+                row.update('selected', selected => !selected),
+              );
+            }
+            return rows.map((row, index) => ({
+              ...row,
+              selected:
+                action.rowIndex === index ? !row.selected : row.selected,
+            }));
+          }),
+        ),
       );
     case REMOVE_ROW:
       return state.update('dictionaries', dictionaries =>
-        dictionaries.update(action.tableId, dictionary => ({
-          ...dictionary,
-          rows: dictionary.rows.filter(row => !row.selected),
-        })),
+        dictionaries.update(action.tableId, dictionary =>
+          dictionary.update('rows', rows => {
+              if (List.isList(rows)) {
+                return rows.filter((row) => !row.get('selected'))
+              } else {
+                return rows.filter((row) => !row.selected);
+              }
+            }
+          ),
+        ),
       );
     default:
       return state;

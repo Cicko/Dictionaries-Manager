@@ -53,7 +53,9 @@ export class DictionariesPage extends React.Component {
   }
 
   componentDidMount() {
-    this.toastErrors();
+    if (this.props.dictionaries) {
+      this.toastErrors();
+    }
   }
 
   toastErrors = () => {
@@ -168,7 +170,7 @@ DictionariesPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
   dictionaries: PropTypes.array,
-  intl: intlShape.isrequired,
+  intl: intlShape.isRequired,
 };
 
 export default compose(
