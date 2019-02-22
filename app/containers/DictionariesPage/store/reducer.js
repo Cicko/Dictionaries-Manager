@@ -99,7 +99,7 @@ function dictionariesPageReducer(state = initialState, action) {
         dictionaries.update(action.tableId, dictionary =>
           dictionary.update('rows', rows => {
               if (List.isList(rows)) {
-                return rows.filter((row) => !row.selected)
+                return rows.filter((row) => !row.get('selected'))
               } else {
                 return rows.filter((row) => !row.selected);
               }
