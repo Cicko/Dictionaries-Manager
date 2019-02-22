@@ -42,7 +42,7 @@ class OverviewPage extends React.Component {
   }
 
   handleChange = e => {
-    const dictionaries = this.props.dictionaries.toArray();
+    const { dictionaries } = this.props;
     if (e.target.value === '') {
       this.setState({
         currentDictionary: -1,
@@ -127,7 +127,7 @@ OverviewPage.propTypes = {
 export default compose(
   connect(state => ({
     drawerOpen: state.getIn(['generic', 'navDrawer', 'open']),
-    dictionaries: state.getIn(['dictionaries', 'dictionaries']),
+    dictionaries: state.getIn(['dictionaries', 'dictionaries']).toJS(),
   })),
   withStyles(styles),
 )(OverviewPage);
